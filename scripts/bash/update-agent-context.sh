@@ -257,7 +257,7 @@ get_commands_for_language() {
             echo "npm test \\&\\& npm run lint"
             ;;
         *)
-            echo "# Add commands for $lang"
+            echo "# Добавьте команды для $lang"
             ;;
     esac
 }
@@ -796,4 +796,3 @@ main() {
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     main "$@"
 fi
-

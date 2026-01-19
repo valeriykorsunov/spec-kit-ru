@@ -398,7 +398,7 @@ specify init <имя_проекта> --ai claude --ignore-agent-tools
 Первым шагом должно быть установление руководящих принципов вашего проекта с помощью команды `/speckit.constitution`. Это помогает обеспечить последовательное принятие решений на всех последующих этапах разработки:
 
 ```text
-/speckit.constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements. Include governance for how these principles should guide technical decisions and implementation choices.
+/speckit.constitution Создай принципы, сфокусированные на качестве кода, стандартах тестирования, единообразии пользовательского опыта и требованиях к производительности. Включи управление тем, как эти принципы должны направлять технические решения и выбор реализации.
 ```
 
 Этот шаг создает или обновляет файл `.specify/memory/constitution.md` с фундаментальными руководящими принципами вашего проекта, на которые ИИ-агент будет ссылаться во время этапов спецификации, планирования и реализации.
@@ -413,22 +413,7 @@ specify init <имя_проекта> --ai claude --ignore-agent-tools
 Пример промпта:
 
 ```text
-Develop Taskify, a team productivity platform. It should allow users to create projects, add team members,
-assign tasks, comment and move tasks between boards in Kanban style. In this initial phase for this feature,
-let's call it "Create Taskify," let's have multiple users but the users will be declared ahead of time, predefined.
-I want five users in two different categories, one product manager and four engineers. Let's create three
-different sample projects. Let's have the standard Kanban columns for the status of each task, such as "To Do,"
-"In Progress," "In Review," and "Done." There will be no login for this application as this is just the very
-first testing thing to ensure that our basic features are set up. For each task in the UI for a task card,
-you should be able to change the current status of the task between the different columns in the Kanban work board.
-You should be able to leave an unlimited number of comments for a particular card. You should be able to, from that task
-card, assign one of the valid users. When you first launch Taskify, it's going to give you a list of the five users to pick
-from. There will be no password required. When you click on a user, you go into the main view, which displays the list of
-projects. When you click on a project, you open the Kanban board for that project. You're going to see the columns.
-You'll be able to drag and drop cards back and forth between different columns. You will see any cards that are
-assigned to you, the currently logged in user, in a different color from all the other ones, so you can quickly
-see yours. You can edit any comments that you make, but you can't edit comments that other people made. You can
-delete any comments that you made, but you can't delete comments anybody else made.
+Разработай Taskify, платформу для продуктивности команды. Она должна позволять пользователям создавать проекты, добавлять членов команды, назначать задачи, комментировать и перемещать задачи между досками в стиле Канбан. На начальном этапе для этой фичи, назовем ее "Создание Taskify", пусть будет несколько пользователей, но пользователи будут объявлены заранее, предопределены. Я хочу пять пользователей двух разных категорий: один менеджер по продукту и четыре инженера. Давай создадим три разных примера проектов. Давай сделаем стандартные колонки Канбан для статуса каждой задачи, такие как "К выполнению", "В процессе", "На проверке" и "Готово". Для этого приложения не будет входа в систему, так как это просто самая первая тестовая вещь, чтобы убедиться, что наши базовые функции настроены. Для каждой задачи в UI карточки задачи должна быть возможность менять текущий статус задачи между различными колонками на доске Канбан. Должна быть возможность оставлять неограниченное количество комментариев к конкретной карточке. Из этой карточки задачи должна быть возможность назначить одного из допустимых пользователей. Когда вы впервые запускаете Taskify, он должен дать вам список из пяти пользователей на выбор. Пароль не требуется. Когда вы кликаете на пользователя, вы попадаете в главное представление, которое отображает список проектов. Когда вы кликаете на проект, вы открываете доску Канбан для этого проекта. Вы увидите колонки. Вы сможете перетаскивать карточки туда и обратно между различными колонками. Вы увидите любые карточки, назначенные вам (текущему залогиненному пользователю), в другом цвете, отличном от всех остальных, чтобы вы могли быстро видеть свои. Вы можете редактировать любые комментарии, которые вы сделали, но вы не можете редактировать комментарии, сделанные другими людьми. Вы можете удалять любые комментарии, которые вы сделали, но вы не можете удалять комментарии, сделанные кем-либо еще.
 ```
 
 После ввода этого промпта вы должны увидеть, как Claude Code запускает процесс планирования и составления спецификации. Claude Code также запустит некоторые встроенные скрипты для настройки репозитория.
@@ -474,15 +459,13 @@ delete any comments that you made, but you can't delete comments anybody else ma
 Пример промпта для уточнения в свободной форме (после `/speckit.clarify`, если все еще требуется):
 
 ```text
-For each sample project or project that you create there should be a variable number of tasks between 5 and 15
-tasks for each one randomly distributed into different states of completion. Make sure that there's at least
-one task in each stage of completion.
+Для каждого примера проекта или проекта, который вы создаете, должно быть переменное количество задач от 5 до 15, случайным образом распределенных по разным состояниям выполнения. Убедись, что есть хотя бы одна задача на каждой стадии выполнения.
 ```
 
 Вы также должны попросить Claude Code проверить **Чек-лист проверки и приемки** (Review & Acceptance Checklist), отмечая пункты, которые подтверждены/соответствуют требованиям, и оставляя неотмеченными те, которые не соответствуют. Можно использовать следующий промпт:
 
 ```text
-Read the review and acceptance checklist, and check off each item in the checklist if the feature spec meets the criteria. Leave it empty if it does not.
+Прочитай чеклист проверки и приемки и отметь каждый пункт в чеклисте, если спецификация фичи соответствует критериям. Оставь пустым, если не соответствует.
 ```
 
 Важно использовать взаимодействие с Claude Code как возможность уточнить и задать вопросы по поводу спецификации - **не относитесь к его первой попытке как к окончательной**.
@@ -492,9 +475,7 @@ Read the review and acceptance checklist, and check off each item in the checkli
 Теперь вы можете конкретизировать технологический стек и другие технические требования. Вы можете использовать команду `/speckit.plan`, встроенную в шаблон проекта, с промптом вроде этого:
 
 ```text
-We are going to generate this using .NET Aspire, using Postgres as the database. The frontend should use
-Blazor server with drag-and-drop task boards, real-time updates. There should be a REST API created with a projects API,
-tasks API, and a notifications API.
+Мы собираемся создать это с использованием .NET Aspire, используя Postgres в качестве базы данных. Фронтенд должен использовать Blazor server с досками задач drag-and-drop и обновлениями в реальном времени. Должен быть создан REST API с API проектов, API задач и API уведомлений.
 ```
 
 Результатом этого шага будет ряд документов с деталями реализации, а дерево каталогов будет выглядеть так:
@@ -532,23 +513,13 @@ tasks API, and a notifications API.
 Кроме того, вы можете попросить Claude Code изучить детали выбранного технологического стека, если это что-то быстро меняющееся (например, .NET Aspire, JS-фреймворки), с таким промптом:
 
 ```text
-I want you to go through the implementation plan and implementation details, looking for areas that could
-benefit from additional research as .NET Aspire is a rapidly changing library. For those areas that you identify that
-require further research, I want you to update the research document with additional details about the specific
-versions that we are going to be using in this Taskify application and spawn parallel research tasks to clarify
-any details using research from the web.
+Я хочу, чтобы ты прошел через план реализации и детали реализации, ища области, которые могли бы выиграть от дополнительного исследования, так как .NET Aspire — это быстро меняющаяся библиотека. Для тех областей, которые ты определишь как требующие дальнейшего исследования, я хочу, чтобы ты обновил документ исследования дополнительными деталями о конкретных версиях, которые мы будем использовать в этом приложении Taskify, и создал параллельные задачи исследования, чтобы уточнить любые детали, используя поиск в интернете.
 ```
 
 Во время этого процесса вы можете обнаружить, что Claude Code застрял, исследуя не то, что нужно - вы можете помочь направить его в нужное русло с помощью такого промпта:
 
 ```text
-I think we need to break this down into a series of steps. First, identify a list of tasks
-that you would need to do during implementation that you're not sure of or would benefit
-from further research. Write down a list of those tasks. And then for each one of these tasks,
-I want you to spin up a separate research task so that the net results is we are researching
-all of those very specific tasks in parallel. What I saw you doing was it looks like you were
-researching .NET Aspire in general and I don't think that's gonna do much for us in this case.
-That's way too untargeted research. The research needs to help you solve a specific targeted question.
+Я думаю, нам нужно разбить это на серию шагов. Сначала определи список задач, которые тебе нужно будет выполнить во время реализации, в которых ты не уверен или которые выиграют от дальнейшего исследования. Запиши список этих задач. И затем для каждой из этих задач я хочу, чтобы ты создал отдельную задачу исследования, чтобы в итоге мы исследовали все эти очень конкретные задачи параллельно. То, что я видел, выглядит так, будто ты исследовал .NET Aspire в целом, и я не думаю, что это нам сильно поможет в данном случае. Это слишком ненацеленное исследование. Исследование должно помочь тебе решить конкретный целевой вопрос.
 ```
 
 > [!NOTE]
@@ -559,11 +530,7 @@ That's way too untargeted research. The research needs to help you solve a speci
 Когда план готов, вы должны попросить Claude Code просмотреть его, чтобы убедиться, что нет упущенных частей. Вы можете использовать такой промпт:
 
 ```text
-Now I want you to go and audit the implementation plan and the implementation detail files.
-Read through it with an eye on determining whether or not there is a sequence of tasks that you need
-to be doing that are obvious from reading this. Because I don't know if there's enough here. For example,
-when I look at the core implementation, it would be useful to reference the appropriate places in the implementation
-details where it can find the information as it walks through each step in the core implementation or in the refinement.
+Теперь я хочу, чтобы ты провел аудит плана реализации и файлов деталей реализации. Прочитай их с целью определить, есть ли последовательность задач, которую тебе нужно выполнить, которые очевидны из прочтения этого. Потому что я не знаю, достаточно ли здесь всего. Например, когда я смотрю на основную реализацию, было бы полезно ссылаться на соответствующие места в деталях реализации, где можно найти информацию по мере прохождения каждого шага в основной реализации или в уточнении.
 ```
 
 Это помогает уточнить план реализации и избежать потенциальных слепых зон, которые Claude Code пропустил в своем цикле планирования. Как только первоначальный проход по уточнению завершен, попросите Claude Code пройтись по чек-листу еще раз, прежде чем приступать к реализации.
