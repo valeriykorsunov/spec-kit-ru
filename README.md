@@ -1,416 +1,416 @@
 <div align="center">
-    <img src="./media/logo_large.webp" alt="Spec Kit Logo" width="200" height="200"/>
+    <img src="./media/logo_large.webp" alt="Логотип Spec Kit" width="200" height="200"/>
     <h1>🌱 Spec Kit</h1>
-    <h3><em>Build high-quality software faster.</em></h3>
+    <h3><em>Создавайте качественное ПО быстрее.</em></h3>
 </div>
 
 <p align="center">
-    <strong>An open source toolkit that allows you to focus on product scenarios and predictable outcomes instead of vibe coding every piece from scratch.</strong>
+    <strong>Набор инструментов с открытым исходным кодом, который позволяет сосредоточиться на продуктовых сценариях и предсказуемых результатах, вместо того чтобы писать код наугад с нуля.</strong>
 </p>
 
 <p align="center">
-    <a href="https://github.com/github/spec-kit/actions/workflows/release.yml"><img src="https://github.com/github/spec-kit/actions/workflows/release.yml/badge.svg" alt="Release"/></a>
-    <a href="https://github.com/github/spec-kit/stargazers"><img src="https://img.shields.io/github/stars/github/spec-kit?style=social" alt="GitHub stars"/></a>
-    <a href="https://github.com/github/spec-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/github/spec-kit" alt="License"/></a>
-    <a href="https://github.github.io/spec-kit/"><img src="https://img.shields.io/badge/docs-GitHub_Pages-blue" alt="Documentation"/></a>
+    <a href="https://github.com/github/spec-kit/actions/workflows/release.yml"><img src="https://github.com/github/spec-kit/actions/workflows/release.yml/badge.svg" alt="Релиз"/></a>
+    <a href="https://github.com/github/spec-kit/stargazers"><img src="https://img.shields.io/github/stars/github/spec-kit?style=social" alt="Звезды на GitHub"/></a>
+    <a href="https://github.com/github/spec-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/github/spec-kit" alt="Лицензия"/></a>
+    <a href="https://github.github.io/spec-kit/"><img src="https://img.shields.io/badge/docs-GitHub_Pages-blue" alt="Документация"/></a>
 </p>
 
 ---
 
-## Table of Contents
+## Содержание
 
-- [🤔 What is Spec-Driven Development?](#-what-is-spec-driven-development)
-- [⚡ Get Started](#-get-started)
-- [📽️ Video Overview](#️-video-overview)
-- [🤖 Supported AI Agents](#-supported-ai-agents)
-- [🔧 Specify CLI Reference](#-specify-cli-reference)
-- [📚 Core Philosophy](#-core-philosophy)
-- [🌟 Development Phases](#-development-phases)
-- [🎯 Experimental Goals](#-experimental-goals)
-- [🔧 Prerequisites](#-prerequisites)
-- [📖 Learn More](#-learn-more)
-- [📋 Detailed Process](#-detailed-process)
-- [🔍 Troubleshooting](#-troubleshooting)
-- [👥 Maintainers](#-maintainers)
-- [💬 Support](#-support)
-- [🙏 Acknowledgements](#-acknowledgements)
-- [📄 License](#-license)
+- [🤔 Что такое разработка на основе спецификаций?](#-what-is-spec-driven-development)
+- [⚡ Начало работы](#-get-started)
+- [📽️ Видеообзор](#️-video-overview)
+- [🤖 Поддерживаемые ИИ-агенты](#-supported-ai-agents)
+- [🔧 Справочник Specify CLI](#-specify-cli-reference)
+- [📚 Основная философия](#-core-philosophy)
+- [🌟 Этапы разработки](#-development-phases)
+- [🎯 Экспериментальные цели](#-experimental-goals)
+- [🔧 Предварительные требования](#-prerequisites)
+- [📖 Узнать больше](#-learn-more)
+- [📋 Подробный процесс](#-detailed-process)
+- [🔍 Устранение неполадок](#-troubleshooting)
+- [👥 Мейнтейнеры](#-maintainers)
+- [💬 Поддержка](#-support)
+- [🙏 Благодарности](#-acknowledgements)
+- [📄 Лицензия](#-license)
 
-## 🤔 What is Spec-Driven Development?
+## 🤔 Что такое разработка на основе спецификаций?
 
-Spec-Driven Development **flips the script** on traditional software development. For decades, code has been king — specifications were just scaffolding we built and discarded once the "real work" of coding began. Spec-Driven Development changes this: **specifications become executable**, directly generating working implementations rather than just guiding them.
+Разработка на основе спецификаций (Spec-Driven Development) **переворачивает представление** о традиционной разработке программного обеспечения. Десятилетиями код был королем — спецификации были лишь строительными лесами, которые мы возводили и отбрасывали, как только начиналась "настоящая работа" по написанию кода. Разработка на основе спецификаций меняет это: **спецификации становятся исполняемыми**, напрямую генерируя рабочие реализации, а не просто направляя их.
 
-## ⚡ Get Started
+## ⚡ Начало работы
 
-### 1. Install Specify CLI
+### 1. Установите Specify CLI
 
-Choose your preferred installation method:
+Выберите предпочтительный способ установки:
 
-#### Option 1: Persistent Installation (Recommended)
+#### Вариант 1: Постоянная установка (Рекомендуется)
 
-Install once and use everywhere:
+Установите один раз и используйте везде:
 
 ```bash
 uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
 ```
 
-Then use the tool directly:
+Затем используйте инструмент напрямую:
 
 ```bash
-# Create new project
-specify init <PROJECT_NAME>
+# Создать новый проект
+specify init <ИМЯ_ПРОЕКТА>
 
-# Or initialize in existing project
+# Или инициализировать в существующем проекте
 specify init . --ai claude
-# or
+# или
 specify init --here --ai claude
 
-# Check installed tools
+# Проверить установленные инструменты
 specify check
 ```
 
-To upgrade Specify, see the [Upgrade Guide](./docs/upgrade.md) for detailed instructions. Quick upgrade:
+Чтобы обновить Specify, см. [Руководство по обновлению](./docs/upgrade.md) для подробных инструкций. Быстрое обновление:
 
 ```bash
 uv tool install specify-cli --force --from git+https://github.com/github/spec-kit.git
 ```
 
-#### Option 2: One-time Usage
+#### Вариант 2: Одноразовое использование
 
-Run directly without installing:
-
-```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME>
-```
-
-**Benefits of persistent installation:**
-
-- Tool stays installed and available in PATH
-- No need to create shell aliases
-- Better tool management with `uv tool list`, `uv tool upgrade`, `uv tool uninstall`
-- Cleaner shell configuration
-
-### 2. Establish project principles
-
-Launch your AI assistant in the project directory. The `/speckit.*` commands are available in the assistant.
-
-Use the **`/speckit.constitution`** command to create your project's governing principles and development guidelines that will guide all subsequent development.
+Запуск напрямую без установки:
 
 ```bash
-/speckit.constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements
+uvx --from git+https://github.com/github/spec-kit.git specify init <ИМЯ_ПРОЕКТА>
 ```
 
-### 3. Create the spec
+**Преимущества постоянной установки:**
 
-Use the **`/speckit.specify`** command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
+- Инструмент остается установленным и доступным в PATH
+- Не нужно создавать алиасы оболочки
+- Лучшее управление инструментом с помощью `uv tool list`, `uv tool upgrade`, `uv tool uninstall`
+- Более чистая конфигурация оболочки
+
+### 2. Установите принципы проекта
+
+Запустите вашего ИИ-ассистента в директории проекта. Команды `/speckit.*` доступны в ассистенте.
+
+Используйте команду **`/speckit.constitution`** для создания руководящих принципов проекта и правил разработки, которые будут направлять всю последующую разработку.
 
 ```bash
-/speckit.specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
+/speckit.constitution Создай принципы, сфокусированные на качестве кода, стандартах тестирования, единообразии пользовательского опыта и требованиях к производительности
 ```
 
-### 4. Create a technical implementation plan
+### 3. Создайте спецификацию
 
-Use the **`/speckit.plan`** command to provide your tech stack and architecture choices.
+Используйте команду **`/speckit.specify`** чтобы описать, что вы хотите создать. Сосредоточьтесь на **что** и **почему**, а не на технологическом стеке.
 
 ```bash
-/speckit.plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
+/speckit.specify Создай приложение, которое поможет мне организовывать мои фотографии в отдельные фотоальбомы. Альбомы группируются по дате и могут быть реорганизованы перетаскиванием на главной странице. Альбомы никогда не находятся внутри других вложенных альбомов. Внутри каждого альбома фотографии просматриваются в плиточном интерфейсе.
 ```
 
-### 5. Break down into tasks
+### 4. Создайте план технической реализации
 
-Use **`/speckit.tasks`** to create an actionable task list from your implementation plan.
+Используйте команду **`/speckit.plan`** чтобы предоставить выбор технологического стека и архитектуры.
+
+```bash
+/speckit.plan Приложение использует Vite с минимальным количеством библиотек. Используй чистый HTML, CSS и JavaScript насколько это возможно. Изображения никуда не загружаются, а метаданные хранятся в локальной базе данных SQLite.
+```
+
+### 5. Разбейте на задачи
+
+Используйте **`/speckit.tasks`** для создания списка выполнимых задач из вашего плана реализации.
 
 ```bash
 /speckit.tasks
 ```
 
-### 6. Execute implementation
+### 6. Выполните реализацию
 
-Use **`/speckit.implement`** to execute all tasks and build your feature according to the plan.
+Используйте **`/speckit.implement`** для выполнения всех задач и создания функции согласно плану.
 
 ```bash
 /speckit.implement
 ```
 
-For detailed step-by-step instructions, see our [comprehensive guide](./spec-driven.md).
+Для подробных пошаговых инструкций см. наше [полное руководство](./spec-driven.md).
 
-## 📽️ Video Overview
+## 📽️ Видеообзор
 
-Want to see Spec Kit in action? Watch our [video overview](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)!
+Хотите увидеть Spec Kit в действии? Посмотрите наш [видеообзор](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)!
 
-[![Spec Kit video header](/media/spec-kit-video-header.jpg)](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)
+[![Заголовок видео Spec Kit](/media/spec-kit-video-header.jpg)](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)
 
-## 🤖 Supported AI Agents
+## 🤖 Поддерживаемые ИИ-агенты
 
-| Agent                                                                                | Support | Notes                                                                                                                                     |
-| ------------------------------------------------------------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| [Qoder CLI](https://qoder.com/cli)                                                   | ✅      |                                                                                                                                           |
-| [Amazon Q Developer CLI](https://aws.amazon.com/developer/learning/q-developer-cli/) | ⚠️      | Amazon Q Developer CLI [does not support](https://github.com/aws/amazon-q-developer-cli/issues/3064) custom arguments for slash commands. |
-| [Amp](https://ampcode.com/)                                                          | ✅      |                                                                                                                                           |
-| [Auggie CLI](https://docs.augmentcode.com/cli/overview)                              | ✅      |                                                                                                                                           |
-| [Claude Code](https://www.anthropic.com/claude-code)                                 | ✅      |                                                                                                                                           |
-| [CodeBuddy CLI](https://www.codebuddy.ai/cli)                                        | ✅      |                                                                                                                                           |
-| [Codex CLI](https://github.com/openai/codex)                                         | ✅      |                                                                                                                                           |
-| [Cursor](https://cursor.sh/)                                                         | ✅      |                                                                                                                                           |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli)                            | ✅      |                                                                                                                                           |
-| [GitHub Copilot](https://code.visualstudio.com/)                                     | ✅      |                                                                                                                                           |
-| [IBM Bob](https://www.ibm.com/products/bob)                                          | ✅      | IDE-based agent with slash command support                                                                                                |
-| [Jules](https://jules.google.com/)                                                   | ✅      |                                                                                                                                           |
-| [Kilo Code](https://github.com/Kilo-Org/kilocode)                                    | ✅      |                                                                                                                                           |
-| [opencode](https://opencode.ai/)                                                     | ✅      |                                                                                                                                           |
-| [Qwen Code](https://github.com/QwenLM/qwen-code)                                     | ✅      |                                                                                                                                           |
-| [Roo Code](https://roocode.com/)                                                     | ✅      |                                                                                                                                           |
-| [SHAI (OVHcloud)](https://github.com/ovh/shai)                                       | ✅      |                                                                                                                                           |
-| [Windsurf](https://windsurf.com/)                                                    | ✅      |                                                                                                                                           |
+| Агент | Поддержка | Примечания |
+| --- | --- | --- |
+| [Qoder CLI](https://qoder.com/cli) | ✅ | |
+| [Amazon Q Developer CLI](https://aws.amazon.com/developer/learning/q-developer-cli/) | ⚠️ | Amazon Q Developer CLI [не поддерживает](https://github.com/aws/amazon-q-developer-cli/issues/3064) пользовательские аргументы для слэш-команд. |
+| [Amp](https://ampcode.com/) | ✅ | |
+| [Auggie CLI](https://docs.augmentcode.com/cli/overview) | ✅ | |
+| [Claude Code](https://www.anthropic.com/claude-code) | ✅ | |
+| [CodeBuddy CLI](https://www.codebuddy.ai/cli) | ✅ | |
+| [Codex CLI](https://github.com/openai/codex) | ✅ | |
+| [Cursor](https://cursor.sh/) | ✅ | |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | |
+| [GitHub Copilot](https://code.visualstudio.com/) | ✅ | |
+| [IBM Bob](https://www.ibm.com/products/bob) | ✅ | Агент на основе IDE с поддержкой слэш-команд |
+| [Jules](https://jules.google.com/) | ✅ | |
+| [Kilo Code](https://github.com/Kilo-Org/kilocode) | ✅ | |
+| [opencode](https://opencode.ai/) | ✅ | |
+| [Qwen Code](https://github.com/QwenLM/qwen-code) | ✅ | |
+| [Roo Code](https://roocode.com/) | ✅ | |
+| [SHAI (OVHcloud)](https://github.com/ovh/shai) | ✅ | |
+| [Windsurf](https://windsurf.com/) | ✅ | |
 
-## 🔧 Specify CLI Reference
+## 🔧 Справочник Specify CLI
 
-The `specify` command supports the following options:
+Команда `specify` поддерживает следующие опции:
 
-### Commands
+### Команды
 
-| Command | Description                                                                                                                                             |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `init`  | Initialize a new Specify project from the latest template                                                                                               |
-| `check` | Check for installed tools (`git`, `claude`, `gemini`, `code`/`code-insiders`, `cursor-agent`, `windsurf`, `qwen`, `opencode`, `codex`, `shai`, `qoder`) |
+| Команда | Описание |
+| ------- | -------- |
+| `init` | Инициализировать новый проект Specify из последнего шаблона |
+| `check` | Проверить наличие установленных инструментов (`git`, `claude`, `gemini`, `code`/`code-insiders`, `cursor-agent`, `windsurf`, `qwen`, `opencode`, `codex`, `shai`, `qoder`) |
 
-### `specify init` Arguments & Options
+### Аргументы и опции `specify init`
 
-| Argument/Option        | Type     | Description                                                                                                                                                                                  |
-| ---------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `<project-name>`       | Argument | Name for your new project directory (optional if using `--here`, or use `.` for current directory)                                                                                           |
-| `--ai`                 | Option   | AI assistant to use: `claude`, `gemini`, `copilot`, `cursor-agent`, `qwen`, `opencode`, `codex`, `windsurf`, `kilocode`, `auggie`, `roo`, `codebuddy`, `amp`, `shai`, `q`, `bob`, or `qoder` |
-| `--script`             | Option   | Script variant to use: `sh` (bash/zsh) or `ps` (PowerShell)                                                                                                                                  |
-| `--ignore-agent-tools` | Flag     | Skip checks for AI agent tools like Claude Code                                                                                                                                              |
-| `--no-git`             | Flag     | Skip git repository initialization                                                                                                                                                           |
-| `--here`               | Flag     | Initialize project in the current directory instead of creating a new one                                                                                                                    |
-| `--force`              | Flag     | Force merge/overwrite when initializing in current directory (skip confirmation)                                                                                                             |
-| `--skip-tls`           | Flag     | Skip SSL/TLS verification (not recommended)                                                                                                                                                  |
-| `--debug`              | Flag     | Enable detailed debug output for troubleshooting                                                                                                                                             |
-| `--github-token`       | Option   | GitHub token for API requests (or set GH_TOKEN/GITHUB_TOKEN env variable)                                                                                                                    |
+| Аргумент/Опция | Тип | Описание |
+| -------------- | --- | -------- |
+| `<project-name>` | Аргумент | Имя для директории вашего нового проекта (необязательно, если используется `--here`, или используйте `.` для текущей директории) |
+| `--ai` | Опция | ИИ-ассистент для использования: `claude`, `gemini`, `copilot`, `cursor-agent`, `qwen`, `opencode`, `codex`, `windsurf`, `kilocode`, `auggie`, `roo`, `codebuddy`, `amp`, `shai`, `q`, `bob`, или `qoder` |
+| `--script` | Опция | Вариант скрипта для использования: `sh` (bash/zsh) или `ps` (PowerShell) |
+| `--ignore-agent-tools` | Флаг | Пропустить проверки инструментов ИИ-агента, таких как Claude Code |
+| `--no-git` | Флаг | Пропустить инициализацию git-репозитория |
+| `--here` | Флаг | Инициализировать проект в текущей директории вместо создания новой |
+| `--force` | Флаг | Принудительно объединить/перезаписать при инициализации в текущей директории (пропустить подтверждение) |
+| `--skip-tls` | Флаг | Пропустить проверку SSL/TLS (не рекомендуется) |
+| `--debug` | Флаг | Включить подробный вывод отладки для устранения неполадок |
+| `--github-token` | Опция | Токен GitHub для запросов API (или установите переменную окружения GH_TOKEN/GITHUB_TOKEN) |
 
-### Examples
+### Примеры
 
 ```bash
-# Basic project initialization
+# Базовая инициализация проекта
 specify init my-project
 
-# Initialize with specific AI assistant
+# Инициализация с конкретным ИИ-ассистентом
 specify init my-project --ai claude
 
-# Initialize with Cursor support
+# Инициализация с поддержкой Cursor
 specify init my-project --ai cursor-agent
 
-# Initialize with Qoder support
+# Инициализация с поддержкой Qoder
 specify init my-project --ai qoder
 
-# Initialize with Windsurf support
+# Инициализация с поддержкой Windsurf
 specify init my-project --ai windsurf
 
-# Initialize with Amp support
+# Инициализация с поддержкой Amp
 specify init my-project --ai amp
 
-# Initialize with SHAI support
+# Инициализация с поддержкой SHAI
 specify init my-project --ai shai
 
-# Initialize with IBM Bob support
+# Инициализация с поддержкой IBM Bob
 specify init my-project --ai bob
 
-# Initialize with PowerShell scripts (Windows/cross-platform)
+# Инициализация со скриптами PowerShell (Windows/кроссплатформенно)
 specify init my-project --ai copilot --script ps
 
-# Initialize in current directory
+# Инициализация в текущей директории
 specify init . --ai copilot
-# or use the --here flag
+# или используйте флаг --here
 specify init --here --ai copilot
 
-# Force merge into current (non-empty) directory without confirmation
+# Принудительное слияние в текущую (непустую) директорию без подтверждения
 specify init . --force --ai copilot
-# or
+# или
 specify init --here --force --ai copilot
 
-# Skip git initialization
+# Пропустить инициализацию git
 specify init my-project --ai gemini --no-git
 
-# Enable debug output for troubleshooting
+# Включить вывод отладки для устранения неполадок
 specify init my-project --ai claude --debug
 
-# Use GitHub token for API requests (helpful for corporate environments)
+# Использовать токен GitHub для запросов API (полезно для корпоративных сред)
 specify init my-project --ai claude --github-token ghp_your_token_here
 
-# Check system requirements
+# Проверить системные требования
 specify check
 ```
 
-### Available Slash Commands
+### Доступные слэш-команды
 
-After running `specify init`, your AI coding agent will have access to these slash commands for structured development:
+После запуска `specify init`, ваш ИИ-агент будет иметь доступ к этим слэш-командам для структурированной разработки:
 
-#### Core Commands
+#### Основные команды
 
-Essential commands for the Spec-Driven Development workflow:
+Обязательные команды для рабочего процесса разработки на основе спецификаций:
 
-| Command                 | Description                                                              |
-| ----------------------- | ------------------------------------------------------------------------ |
-| `/speckit.constitution` | Create or update project governing principles and development guidelines |
-| `/speckit.specify`      | Define what you want to build (requirements and user stories)            |
-| `/speckit.plan`         | Create technical implementation plans with your chosen tech stack        |
-| `/speckit.tasks`        | Generate actionable task lists for implementation                        |
-| `/speckit.implement`    | Execute all tasks to build the feature according to the plan             |
+| Команда | Описание |
+| ------- | -------- |
+| `/speckit.constitution` | Создать или обновить руководящие принципы проекта и правила разработки |
+| `/speckit.specify` | Определить, что вы хотите создать (требования и пользовательские истории) |
+| `/speckit.plan` | Создать планы технической реализации с выбранным вами технологическим стеком |
+| `/speckit.tasks` | Генерировать списки выполнимых задач для реализации |
+| `/speckit.implement` | Выполнить все задачи для создания функции согласно плану |
 
-#### Optional Commands
+#### Дополнительные команды
 
-Additional commands for enhanced quality and validation:
+Дополнительные команды для улучшения качества и валидации:
 
-| Command              | Description                                                                                                                          |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `/speckit.clarify`   | Clarify underspecified areas (recommended before `/speckit.plan`; formerly `/quizme`)                                                |
-| `/speckit.analyze`   | Cross-artifact consistency & coverage analysis (run after `/speckit.tasks`, before `/speckit.implement`)                             |
-| `/speckit.checklist` | Generate custom quality checklists that validate requirements completeness, clarity, and consistency (like "unit tests for English") |
+| Команда | Описание |
+| ------- | -------- |
+| `/speckit.clarify` | Уточнить недостаточно специфицированные области (рекомендуется перед `/speckit.plan`; ранее `/quizme`) |
+| `/speckit.analyze` | Анализ согласованности и покрытия кросс-артефактов (запускать после `/speckit.tasks`, перед `/speckit.implement`) |
+| `/speckit.checklist` | Генерировать пользовательские чек-листы качества, проверяющие полноту, ясность и согласованность требований (как "юнит-тесты для английского") |
 
-### Environment Variables
+### Переменные окружения
 
-| Variable          | Description                                                                                                                                                                                                                                                                                            |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `SPECIFY_FEATURE` | Override feature detection for non-Git repositories. Set to the feature directory name (e.g., `001-photo-albums`) to work on a specific feature when not using Git branches.<br/>\*\*Must be set in the context of the agent you're working with prior to using `/speckit.plan` or follow-up commands. |
+| Переменная | Описание |
+| ---------- | -------- |
+| `SPECIFY_FEATURE` | Переопределить обнаружение функций для репозиториев без Git. Установите имя директории функции (например, `001-photo-albums`), чтобы работать над конкретной функцией, когда не используются ветки Git.<br/>\*\*Должно быть установлено в контексте агента, с которым вы работаете, до использования `/speckit.plan` или последующих команд. |
 
-## 📚 Core Philosophy
+## 📚 Основная философия
 
-Spec-Driven Development is a structured process that emphasizes:
+Разработка на основе спецификаций — это структурированный процесс, который подчеркивает:
 
-- **Intent-driven development** where specifications define the "*what*" before the "*how*"
-- **Rich specification creation** using guardrails and organizational principles
-- **Multi-step refinement** rather than one-shot code generation from prompts
-- **Heavy reliance** on advanced AI model capabilities for specification interpretation
+- **Разработку, управляемую намерениями**, где спецификации определяют "*что*" перед "*как*"
+- **Создание богатых спецификаций** с использованием ограничений и организационных принципов
+- **Многоэтапное улучшение** вместо однократной генерации кода из промптов
+- **Сильную зависимость** от возможностей продвинутых моделей ИИ для интерпретации спецификаций
 
-## 🌟 Development Phases
+## 🌟 Этапы разработки
 
-| Phase                                    | Focus                    | Key Activities                                                                                                                                                     |
-| ---------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **0-to-1 Development** ("Greenfield")    | Generate from scratch    | <ul><li>Start with high-level requirements</li><li>Generate specifications</li><li>Plan implementation steps</li><li>Build production-ready applications</li></ul> |
-| **Creative Exploration**                 | Parallel implementations | <ul><li>Explore diverse solutions</li><li>Support multiple technology stacks & architectures</li><li>Experiment with UX patterns</li></ul>                         |
-| **Iterative Enhancement** ("Brownfield") | Brownfield modernization | <ul><li>Add features iteratively</li><li>Modernize legacy systems</li><li>Adapt processes</li></ul>                                                                |
+| Этап | Фокус | Ключевые активности |
+| ---- | ----- | ------------------- |
+| **Разработка с 0 до 1** ("Greenfield") | Генерация с нуля | <ul><li>Начать с высокоуровневых требований</li><li>Генерировать спецификации</li><li>Планировать шаги реализации</li><li>Создавать готовые к продакшену приложения</li></ul> |
+| **Творческое исследование** | Параллельные реализации | <ul><li>Исследовать разнообразные решения</li><li>Поддерживать несколько технологических стеков и архитектур</li><li>Экспериментировать с UX-паттернами</li></ul> |
+| **Итеративное улучшение** ("Brownfield") | Модернизация существующего | <ul><li>Добавлять функции итеративно</li><li>Модернизировать устаревшие системы</li><li>Адаптировать процессы</li></ul> |
 
-## 🎯 Experimental Goals
+## 🎯 Экспериментальные цели
 
-Our research and experimentation focus on:
+Наши исследования и эксперименты сфокусированы на:
 
-### Technology independence
+### Технологическая независимость
 
-- Create applications using diverse technology stacks
-- Validate the hypothesis that Spec-Driven Development is a process not tied to specific technologies, programming languages, or frameworks
+- Создание приложений с использованием разнообразных технологических стеков
+- Проверка гипотезы, что разработка на основе спецификаций — это процесс, не привязанный к конкретным технологиям, языкам программирования или фреймворкам
 
-### Enterprise constraints
+### Корпоративные ограничения
 
-- Demonstrate mission-critical application development
-- Incorporate organizational constraints (cloud providers, tech stacks, engineering practices)
-- Support enterprise design systems and compliance requirements
+- Демонстрация разработки критически важных приложений
+- Включение организационных ограничений (облачные провайдеры, технологические стеки, инженерные практики)
+- Поддержка корпоративных дизайн-систем и требований соответствия
 
-### User-centric development
+### Разработка, ориентированная на пользователя
 
-- Build applications for different user cohorts and preferences
-- Support various development approaches (from vibe-coding to AI-native development)
+- Создание приложений для разных групп пользователей и предпочтений
+- Поддержка различных подходов к разработке (от vibe-coding до AI-native разработки)
 
-### Creative & iterative processes
+### Творческие и итеративные процессы
 
-- Validate the concept of parallel implementation exploration
-- Provide robust iterative feature development workflows
-- Extend processes to handle upgrades and modernization tasks
+- Проверка концепции исследования параллельных реализаций
+- Предоставление надежных рабочих процессов итеративной разработки функций
+- Расширение процессов для обработки задач обновления и модернизации
 
-## 🔧 Prerequisites
+## 🔧 Предварительные требования
 
 - **Linux/macOS/Windows**
-- [Supported](#-supported-ai-agents) AI coding agent.
-- [uv](https://docs.astral.sh/uv/) for package management
+- [Поддерживаемый](#-поддерживаемые-ии-агенты) ИИ-агент для написания кода.
+- [uv](https://docs.astral.sh/uv/) для управления пакетами
 - [Python 3.11+](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
 
-If you encounter issues with an agent, please open an issue so we can refine the integration.
+Если вы столкнулись с проблемами с агентом, пожалуйста, откройте issue, чтобы мы могли улучшить интеграцию.
 
-## 📖 Learn More
+## 📖 Узнать больше
 
-- **[Complete Spec-Driven Development Methodology](./spec-driven.md)** - Deep dive into the full process
-- **[Detailed Walkthrough](#-detailed-process)** - Step-by-step implementation guide
+- **[Полная методология разработки на основе спецификаций](./spec-driven.md)** - Глубокое погружение в полный процесс
+- **[Подробное прохождение](#-подробный-процесс)** - Пошаговое руководство по реализации
 
 ---
 
-## 📋 Detailed Process
+## 📋 Подробный процесс
 
 <details>
-<summary>Click to expand the detailed step-by-step walkthrough</summary>
+<summary>Нажмите, чтобы развернуть подробное пошаговое прохождение</summary>
 
-You can use the Specify CLI to bootstrap your project, which will bring in the required artifacts in your environment. Run:
+Вы можете использовать Specify CLI для начальной загрузки вашего проекта, что принесет необходимые артефакты в вашу среду. Запустите:
 
 ```bash
-specify init <project_name>
+specify init <имя_проекта>
 ```
 
-Or initialize in the current directory:
+Или инициализируйте в текущей директории:
 
 ```bash
 specify init .
-# or use the --here flag
+# или используйте флаг --here
 specify init --here
-# Skip confirmation when the directory already has files
+# Пропустить подтверждение, когда в директории уже есть файлы
 specify init . --force
-# or
+# или
 specify init --here --force
 ```
 
-![Specify CLI bootstrapping a new project in the terminal](./media/specify_cli.gif)
+![Specify CLI начальная загрузка нового проекта в терминале](./media/specify_cli.gif)
 
-You will be prompted to select the AI agent you are using. You can also proactively specify it directly in the terminal:
+Вам будет предложено выбрать ИИ-агента, которого вы используете. Вы также можете заранее указать его прямо в терминале:
 
 ```bash
-specify init <project_name> --ai claude
-specify init <project_name> --ai gemini
-specify init <project_name> --ai copilot
+specify init <имя_проекта> --ai claude
+specify init <имя_проекта> --ai gemini
+specify init <имя_проекта> --ai copilot
 
-# Or in current directory:
+# Или в текущей директории:
 specify init . --ai claude
 specify init . --ai codex
 
-# or use --here flag
+# или используйте флаг --here
 specify init --here --ai claude
 specify init --here --ai codex
 
-# Force merge into a non-empty current directory
+# Принудительное слияние в непустую текущую директорию
 specify init . --force --ai claude
 
-# or
+# или
 specify init --here --force --ai claude
 ```
 
-The CLI will check if you have Claude Code, Gemini CLI, Cursor CLI, Qwen CLI, opencode, Codex CLI, Qoder CLI, or Amazon Q Developer CLI installed. If you do not, or you prefer to get the templates without checking for the right tools, use `--ignore-agent-tools` with your command:
+CLI проверит, установлены ли у вас Claude Code, Gemini CLI, Cursor CLI, Qwen CLI, opencode, Codex CLI, Qoder CLI или Amazon Q Developer CLI. Если у вас их нет, или вы предпочитаете получить шаблоны без проверки наличия правильных инструментов, используйте `--ignore-agent-tools` с вашей командой:
 
 ```bash
-specify init <project_name> --ai claude --ignore-agent-tools
+specify init <имя_проекта> --ai claude --ignore-agent-tools
 ```
 
-### **STEP 1:** Establish project principles
+### **ШАГ 1:** Установите принципы проекта
 
-Go to the project folder and run your AI agent. In our example, we're using `claude`.
+Перейдите в папку проекта и запустите вашего ИИ-агента. В нашем примере мы используем `claude`.
 
-![Bootstrapping Claude Code environment](./media/bootstrap-claude-code.gif)
+![Загрузка среды Claude Code](./media/bootstrap-claude-code.gif)
 
-You will know that things are configured correctly if you see the `/speckit.constitution`, `/speckit.specify`, `/speckit.plan`, `/speckit.tasks`, and `/speckit.implement` commands available.
+Вы узнаете, что все настроено правильно, если увидите доступные команды `/speckit.constitution`, `/speckit.specify`, `/speckit.plan`, `/speckit.tasks` и `/speckit.implement`.
 
-The first step should be establishing your project's governing principles using the `/speckit.constitution` command. This helps ensure consistent decision-making throughout all subsequent development phases:
+Первым шагом должно быть установление руководящих принципов вашего проекта с помощью команды `/speckit.constitution`. Это помогает обеспечить последовательное принятие решений на всех последующих этапах разработки:
 
 ```text
 /speckit.constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements. Include governance for how these principles should guide technical decisions and implementation choices.
 ```
 
-This step creates or updates the `.specify/memory/constitution.md` file with your project's foundational guidelines that the AI agent will reference during specification, planning, and implementation phases.
+Этот шаг создает или обновляет файл `.specify/memory/constitution.md` с фундаментальными руководящими принципами вашего проекта, на которые ИИ-агент будет ссылаться во время этапов спецификации, планирования и реализации.
 
-### **STEP 2:** Create project specifications
+### **ШАГ 2:** Создайте спецификации проекта
 
-With your project principles established, you can now create the functional specifications. Use the `/speckit.specify` command and then provide the concrete requirements for the project you want to develop.
+Установив принципы проекта, вы теперь можете создать функциональные спецификации. Используйте команду `/speckit.specify`, а затем предоставьте конкретные требования для проекта, который вы хотите разработать.
 
 > [!IMPORTANT]
-> Be as explicit as possible about *what* you are trying to build and *why*. **Do not focus on the tech stack at this point**.
+> Будьте как можно более явными в том, *что* вы пытаетесь построить и *почему*. **Не сосредотачивайтесь на технологическом стеке на этом этапе**.
 
-An example prompt:
+Пример промпта:
 
 ```text
 Develop Taskify, a team productivity platform. It should allow users to create projects, add team members,
@@ -431,13 +431,13 @@ see yours. You can edit any comments that you make, but you can't edit comments 
 delete any comments that you made, but you can't delete comments anybody else made.
 ```
 
-After this prompt is entered, you should see Claude Code kick off the planning and spec drafting process. Claude Code will also trigger some of the built-in scripts to set up the repository.
+После ввода этого промпта вы должны увидеть, как Claude Code запускает процесс планирования и составления спецификации. Claude Code также запустит некоторые встроенные скрипты для настройки репозитория.
 
-Once this step is completed, you should have a new branch created (e.g., `001-create-taskify`), as well as a new specification in the `specs/001-create-taskify` directory.
+Как только этот шаг будет завершен, у вас должна быть создана новая ветка (например, `001-create-taskify`), а также новая спецификация в директории `specs/001-create-taskify`.
 
-The produced specification should contain a set of user stories and functional requirements, as defined in the template.
+Созданная спецификация должна содержать набор пользовательских историй и функциональных требований, как определено в шаблоне.
 
-At this stage, your project folder contents should resemble the following:
+На этом этапе содержимое папки вашего проекта должно выглядеть следующим образом:
 
 ```text
 └── .specify
@@ -458,20 +458,20 @@ At this stage, your project folder contents should resemble the following:
         └── tasks-template.md
 ```
 
-### **STEP 3:** Functional specification clarification (required before planning)
+### **ШАГ 3:** Уточнение функциональной спецификации (требуется перед планированием)
 
-With the baseline specification created, you can go ahead and clarify any of the requirements that were not captured properly within the first shot attempt.
+Создав базовую спецификацию, вы можете приступить к уточнению любых требований, которые не были должным образом отражены при первой попытке.
 
-You should run the structured clarification workflow **before** creating a technical plan to reduce rework downstream.
+Вам следует запустить структурированный рабочий процесс уточнения **перед** созданием технического плана, чтобы уменьшить переделки в дальнейшем.
 
-Preferred order:
+Предпочтительный порядок:
 
-1. Use `/speckit.clarify` (structured) – sequential, coverage-based questioning that records answers in a Clarifications section.
-2. Optionally follow up with ad-hoc free-form refinement if something still feels vague.
+1. Используйте `/speckit.clarify` (структурированный) – последовательный опрос на основе покрытия, который записывает ответы в раздел "Уточнения" (Clarifications).
+2. При необходимости продолжите с помощью произвольного уточнения в свободной форме, если что-то все еще кажется расплывчатым.
 
-If you intentionally want to skip clarification (e.g., spike or exploratory prototype), explicitly state that so the agent doesn't block on missing clarifications.
+Если вы намеренно хотите пропустить уточнение (например, для спайка или исследовательского прототипа), явно укажите это, чтобы агент не блокировался из-за отсутствующих уточнений.
 
-Example free-form refinement prompt (after `/speckit.clarify` if still needed):
+Пример промпта для уточнения в свободной форме (после `/speckit.clarify`, если все еще требуется):
 
 ```text
 For each sample project or project that you create there should be a variable number of tasks between 5 and 15
@@ -479,17 +479,17 @@ tasks for each one randomly distributed into different states of completion. Mak
 one task in each stage of completion.
 ```
 
-You should also ask Claude Code to validate the **Review & Acceptance Checklist**, checking off the things that are validated/pass the requirements, and leave the ones that are not unchecked. The following prompt can be used:
+Вы также должны попросить Claude Code проверить **Чек-лист проверки и приемки** (Review & Acceptance Checklist), отмечая пункты, которые подтверждены/соответствуют требованиям, и оставляя неотмеченными те, которые не соответствуют. Можно использовать следующий промпт:
 
 ```text
 Read the review and acceptance checklist, and check off each item in the checklist if the feature spec meets the criteria. Leave it empty if it does not.
 ```
 
-It's important to use the interaction with Claude Code as an opportunity to clarify and ask questions around the specification - **do not treat its first attempt as final**.
+Важно использовать взаимодействие с Claude Code как возможность уточнить и задать вопросы по поводу спецификации - **не относитесь к его первой попытке как к окончательной**.
 
-### **STEP 4:** Generate a plan
+### **ШАГ 4:** Сгенерируйте план
 
-You can now be specific about the tech stack and other technical requirements. You can use the `/speckit.plan` command that is built into the project template with a prompt like this:
+Теперь вы можете конкретизировать технологический стек и другие технические требования. Вы можете использовать команду `/speckit.plan`, встроенную в шаблон проекта, с промптом вроде этого:
 
 ```text
 We are going to generate this using .NET Aspire, using Postgres as the database. The frontend should use
@@ -497,7 +497,7 @@ Blazor server with drag-and-drop task boards, real-time updates. There should be
 tasks API, and a notifications API.
 ```
 
-The output of this step will include a number of implementation detail documents, with your directory tree resembling this:
+Результатом этого шага будет ряд документов с деталями реализации, а дерево каталогов будет выглядеть так:
 
 ```text
 .
@@ -527,9 +527,9 @@ The output of this step will include a number of implementation detail documents
     └── tasks-template.md
 ```
 
-Check the `research.md` document to ensure that the right tech stack is used, based on your instructions. You can ask Claude Code to refine it if any of the components stand out, or even have it check the locally-installed version of the platform/framework you want to use (e.g., .NET).
+Проверьте документ `research.md`, чтобы убедиться, что используется правильный технологический стек, основанный на ваших инструкциях. Вы можете попросить Claude Code уточнить его, если какие-либо компоненты выделяются, или даже попросить его проверить локально установленную версию платформы/фреймворка, которую вы хотите использовать (например, .NET).
 
-Additionally, you might want to ask Claude Code to research details about the chosen tech stack if it's something that is rapidly changing (e.g., .NET Aspire, JS frameworks), with a prompt like this:
+Кроме того, вы можете попросить Claude Code изучить детали выбранного технологического стека, если это что-то быстро меняющееся (например, .NET Aspire, JS-фреймворки), с таким промптом:
 
 ```text
 I want you to go through the implementation plan and implementation details, looking for areas that could
@@ -539,7 +539,7 @@ versions that we are going to be using in this Taskify application and spawn par
 any details using research from the web.
 ```
 
-During this process, you might find that Claude Code gets stuck researching the wrong thing - you can help nudge it in the right direction with a prompt like this:
+Во время этого процесса вы можете обнаружить, что Claude Code застрял, исследуя не то, что нужно - вы можете помочь направить его в нужное русло с помощью такого промпта:
 
 ```text
 I think we need to break this down into a series of steps. First, identify a list of tasks
@@ -552,11 +552,11 @@ That's way too untargeted research. The research needs to help you solve a speci
 ```
 
 > [!NOTE]
-> Claude Code might be over-eager and add components that you did not ask for. Ask it to clarify the rationale and the source of the change.
+> Claude Code может быть чрезмерно усердным и добавить компоненты, о которых вы не просили. Попросите его прояснить обоснование и источник изменения.
 
-### **STEP 5:** Have Claude Code validate the plan
+### **ШАГ 5:** Попросите Claude Code проверить план
 
-With the plan in place, you should have Claude Code run through it to make sure that there are no missing pieces. You can use a prompt like this:
+Когда план готов, вы должны попросить Claude Code просмотреть его, чтобы убедиться, что нет упущенных частей. Вы можете использовать такой промпт:
 
 ```text
 Now I want you to go and audit the implementation plan and the implementation detail files.
@@ -566,62 +566,62 @@ when I look at the core implementation, it would be useful to reference the appr
 details where it can find the information as it walks through each step in the core implementation or in the refinement.
 ```
 
-This helps refine the implementation plan and helps you avoid potential blind spots that Claude Code missed in its planning cycle. Once the initial refinement pass is complete, ask Claude Code to go through the checklist once more before you can get to the implementation.
+Это помогает уточнить план реализации и избежать потенциальных слепых зон, которые Claude Code пропустил в своем цикле планирования. Как только первоначальный проход по уточнению завершен, попросите Claude Code пройтись по чек-листу еще раз, прежде чем приступать к реализации.
 
-You can also ask Claude Code (if you have the [GitHub CLI](https://docs.github.com/en/github-cli/github-cli) installed) to go ahead and create a pull request from your current branch to `main` with a detailed description, to make sure that the effort is properly tracked.
+Вы также можете попросить Claude Code (если у вас установлен [GitHub CLI](https://docs.github.com/en/github-cli/github-cli)) создать пул-реквест из вашей текущей ветки в `main` с подробным описанием, чтобы убедиться, что усилия должным образом отслеживаются.
 
 > [!NOTE]
-> Before you have the agent implement it, it's also worth prompting Claude Code to cross-check the details to see if there are any over-engineered pieces (remember - it can be over-eager). If over-engineered components or decisions exist, you can ask Claude Code to resolve them. Ensure that Claude Code follows the [constitution](base/memory/constitution.md) as the foundational piece that it must adhere to when establishing the plan.
+> Прежде чем поручить агенту реализацию, также стоит попросить Claude Code перепроверить детали, чтобы увидеть, нет ли каких-либо переусложненных частей (помните - он может быть чрезмерно усердным). Если существуют переусложненные компоненты или решения, вы можете попросить Claude Code исправить их. Убедитесь, что Claude Code следует [конституции](base/memory/constitution.md) как фундаментальной части, которой он должен придерживаться при составлении плана.
 
-### **STEP 6:** Generate task breakdown with /speckit.tasks
+### **ШАГ 6:** Сгенерируйте разбивку задач с помощью /speckit.tasks
 
-With the implementation plan validated, you can now break down the plan into specific, actionable tasks that can be executed in the correct order. Use the `/speckit.tasks` command to automatically generate a detailed task breakdown from your implementation plan:
+С подтвержденным планом реализации вы теперь можете разбить план на конкретные, выполнимые задачи, которые могут быть выполнены в правильном порядке. Используйте команду `/speckit.tasks` для автоматической генерации подробной разбивки задач из вашего плана реализации:
 
 ```text
 /speckit.tasks
 ```
 
-This step creates a `tasks.md` file in your feature specification directory that contains:
+Этот шаг создает файл `tasks.md` в директории спецификации вашей функции, который содержит:
 
-- **Task breakdown organized by user story** - Each user story becomes a separate implementation phase with its own set of tasks
-- **Dependency management** - Tasks are ordered to respect dependencies between components (e.g., models before services, services before endpoints)
-- **Parallel execution markers** - Tasks that can run in parallel are marked with `[P]` to optimize development workflow
-- **File path specifications** - Each task includes the exact file paths where implementation should occur
-- **Test-driven development structure** - If tests are requested, test tasks are included and ordered to be written before implementation
-- **Checkpoint validation** - Each user story phase includes checkpoints to validate independent functionality
+- **Разбивка задач, организованная по пользовательским историям** - Каждая пользовательская история становится отдельным этапом реализации со своим набором задач
+- **Управление зависимостями** - Задачи упорядочены с учетом зависимостей между компонентами (например, модели перед сервисами, сервисы перед эндпоинтами)
+- **Маркеры параллельного выполнения** - Задачи, которые могут выполняться параллельно, помечены `[P]` для оптимизации рабочего процесса разработки
+- **Спецификации путей к файлам** - Каждая задача включает точные пути к файлам, где должна происходить реализация
+- **Структура разработки через тестирование (TDD)** - Если запрошены тесты, задачи тестирования включаются и упорядочиваются так, чтобы быть написанными перед реализацией
+- **Проверка контрольных точек** - Каждый этап пользовательской истории включает контрольные точки для проверки независимой функциональности
 
-The generated tasks.md provides a clear roadmap for the `/speckit.implement` command, ensuring systematic implementation that maintains code quality and allows for incremental delivery of user stories.
+Сгенерированный tasks.md предоставляет четкую дорожную карту для команды `/speckit.implement`, обеспечивая систематическую реализацию, которая поддерживает качество кода и позволяет инкрементально доставлять пользовательские истории.
 
-### **STEP 7:** Implementation
+### **ШАГ 7:** Реализация
 
-Once ready, use the `/speckit.implement` command to execute your implementation plan:
+Как только все готово, используйте команду `/speckit.implement` для выполнения вашего плана реализации:
 
 ```text
 /speckit.implement
 ```
 
-The `/speckit.implement` command will:
+Команда `/speckit.implement`:
 
-- Validate that all prerequisites are in place (constitution, spec, plan, and tasks)
-- Parse the task breakdown from `tasks.md`
-- Execute tasks in the correct order, respecting dependencies and parallel execution markers
-- Follow the TDD approach defined in your task plan
-- Provide progress updates and handle errors appropriately
+- Проверит, что все предварительные требования на месте (конституция, спецификация, план и задачи)
+- Распарсит разбивку задач из `tasks.md`
+- Выполнит задачи в правильном порядке, соблюдая зависимости и маркеры параллельного выполнения
+- Будет следовать подходу TDD, определенному в вашем плане задач
+- Предоставит обновления прогресса и обработает ошибки соответствующим образом
 
 > [!IMPORTANT]
-> The AI agent will execute local CLI commands (such as `dotnet`, `npm`, etc.) - make sure you have the required tools installed on your machine.
+> ИИ-агент будет выполнять локальные команды CLI (такие как `dotnet`, `npm` и т.д.) - убедитесь, что у вас установлены необходимые инструменты на вашем компьютере.
 
-Once the implementation is complete, test the application and resolve any runtime errors that may not be visible in CLI logs (e.g., browser console errors). You can copy and paste such errors back to your AI agent for resolution.
+Как только реализация завершена, протестируйте приложение и устраните любые ошибки времени выполнения, которые могут быть не видны в логах CLI (например, ошибки консоли браузера). Вы можете скопировать и вставить такие ошибки обратно вашему ИИ-агенту для решения.
 
 </details>
 
 ---
 
-## 🔍 Troubleshooting
+## 🔍 Устранение неполадок
 
-### Git Credential Manager on Linux
+### Git Credential Manager на Linux
 
-If you're having issues with Git authentication on Linux, you can install Git Credential Manager:
+Если у вас возникли проблемы с аутентификацией Git на Linux, вы можете установить Git Credential Manager:
 
 ```bash
 #!/usr/bin/env bash
@@ -636,19 +636,19 @@ echo "Cleaning up..."
 rm gcm-linux_amd64.2.6.1.deb
 ```
 
-## 👥 Maintainers
+## 👥 Мейнтейнеры
 
 - Den Delimarsky ([@localden](https://github.com/localden))
 - John Lam ([@jflam](https://github.com/jflam))
 
-## 💬 Support
+## 💬 Поддержка
 
-For support, please open a [GitHub issue](https://github.com/github/spec-kit/issues/new). We welcome bug reports, feature requests, and questions about using Spec-Driven Development.
+Для поддержки, пожалуйста, откройте [GitHub issue](https://github.com/github/spec-kit/issues/new). Мы приветствуем сообщения об ошибках, запросы функций и вопросы об использовании разработки на основе спецификаций.
 
-## 🙏 Acknowledgements
+## 🙏 Благодарности
 
-This project is heavily influenced by and based on the work and research of [John Lam](https://github.com/jflam).
+Этот проект находится под сильным влиянием и основан на работе и исследованиях [John Lam](https://github.com/jflam).
 
-## 📄 License
+## 📄 Лицензия
 
-This project is licensed under the terms of the MIT open source license. Please refer to the [LICENSE](./LICENSE) file for the full terms.
+Этот проект лицензирован в соответствии с условиями лицензии с открытым исходным кодом MIT. Пожалуйста, обратитесь к файлу [LICENSE](./LICENSE) для получения полных условий.
