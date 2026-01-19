@@ -1,29 +1,29 @@
 ---
-description: Execute the implementation plan by processing and executing all tasks defined in tasks.md
+description: Выполнить план реализации, обработав и выполнив все задачи, определенные в tasks.md
 scripts:
   sh: scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks
   ps: scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks
 ---
 
-## User Input
+## Ввод пользователя
 
 ```text
 $ARGUMENTS
 ```
 
-You **MUST** consider the user input before proceeding (if not empty).
+Вы **ОБЯЗАНЫ** учесть ввод пользователя перед продолжением (если он не пуст).
 
-## Outline
+## План действий
 
-1. Run `{SCRIPT}` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
+1. Запустите `{SCRIPT}` из корня репозитория и разберите `FEATURE_DIR` и список `AVAILABLE_DOCS`. Все пути должны быть абсолютными. Для одинарных кавычек в аргументах (например, "I'm Groot") используйте escape-синтаксис: например, 'I'\''m Groot' (или двойные кавычки, если возможно: "I'm Groot").
 
-2. **Check checklists status** (if FEATURE_DIR/checklists/ exists):
-   - Scan all checklist files in the checklists/ directory
-   - For each checklist, count:
-     - Total items: All lines matching `- [ ]` or `- [X]` or `- [x]`
-     - Completed items: Lines matching `- [X]` or `- [x]`
-     - Incomplete items: Lines matching `- [ ]`
-   - Create a status table:
+2. **Проверьте статус чек-листов** (если существует директория `FEATURE_DIR/checklists/`):
+   - Сканируйте все файлы чек-листов в директории `checklists/`
+   - Для каждого чек-листа подсчитайте:
+     - Всего пунктов: Все строки, соответствующие `- [ ]`, `- [X]` или `- [x]`
+     - Выполненные пункты: Строки, соответствующие `- [X]` или `- [x]`
+     - Невыполненные пункты: Строки, соответствующие `- [ ]`
+   - Создайте таблицу статусов:
 
      ```text
      | Checklist | Total | Completed | Incomplete | Status |
@@ -33,51 +33,51 @@ You **MUST** consider the user input before proceeding (if not empty).
      | security.md | 6   | 6         | 0          | ✓ PASS |
      ```
 
-   - Calculate overall status:
-     - **PASS**: All checklists have 0 incomplete items
-     - **FAIL**: One or more checklists have incomplete items
+   - Рассчитайте общий статус:
+     - **PASS**: Во всех чек-листах 0 невыполненных пунктов
+     - **FAIL**: В одном или нескольких чек-листах есть невыполненные пункты
 
-   - **If any checklist is incomplete**:
-     - Display the table with incomplete item counts
-     - **STOP** and ask: "Some checklists are incomplete. Do you want to proceed with implementation anyway? (yes/no)"
-     - Wait for user response before continuing
-     - If user says "no" or "wait" or "stop", halt execution
-     - If user says "yes" or "proceed" or "continue", proceed to step 3
+   - **Если какой-либо чек-лист не завершен**:
+     - Отобразите таблицу с количеством невыполненных пунктов
+     - **ОСТАНОВИТЕСЬ** и спросите: "Some checklists are incomplete. Do you want to proceed with implementation anyway? (yes/no)"
+     - Ждите ответа пользователя перед продолжением
+     - Если пользователь ответит "no", "wait" или "stop", остановите выполнение
+     - Если пользователь ответит "yes", "proceed" или "continue", переходите к шагу 3
 
-   - **If all checklists are complete**:
-     - Display the table showing all checklists passed
-     - Automatically proceed to step 3
+   - **Если все чек-листы завершены**:
+     - Отобразите таблицу, показывающую, что все чек-листы пройдены
+     - Автоматически переходите к шагу 3
 
-3. Load and analyze the implementation context:
-   - **REQUIRED**: Read tasks.md for the complete task list and execution plan
-   - **REQUIRED**: Read plan.md for tech stack, architecture, and file structure
-   - **IF EXISTS**: Read data-model.md for entities and relationships
-   - **IF EXISTS**: Read contracts/ for API specifications and test requirements
-   - **IF EXISTS**: Read research.md for technical decisions and constraints
-   - **IF EXISTS**: Read quickstart.md for integration scenarios
+3. Загрузите и проанализируйте контекст реализации:
+   - **ОБЯЗАТЕЛЬНО**: Прочитайте `tasks.md` для получения полного списка задач и плана выполнения
+   - **ОБЯЗАТЕЛЬНО**: Прочитайте `plan.md` для понимания стека технологий, архитектуры и структуры файлов
+   - **ЕСЛИ ЕСТЬ**: Прочитайте `data-model.md` для понимания сущностей и связей
+   - **ЕСЛИ ЕСТЬ**: Прочитайте `contracts/` для спецификаций API и требований к тестам
+   - **ЕСЛИ ЕСТЬ**: Прочитайте `research.md` для технических решений и ограничений
+   - **ЕСЛИ ЕСТЬ**: Прочитайте `quickstart.md` для сценариев интеграции
 
-4. **Project Setup Verification**:
-   - **REQUIRED**: Create/verify ignore files based on actual project setup:
+4. **Верификация настройки проекта**:
+   - **ОБЯЗАТЕЛЬНО**: Создайте/проверьте файлы игнорирования на основе реальной настройки проекта:
 
-   **Detection & Creation Logic**:
-   - Check if the following command succeeds to determine if the repository is a git repo (create/verify .gitignore if so):
+   **Логика обнаружения и создания**:
+   - Проверьте, выполняется ли следующая команда, чтобы определить, является ли репозиторий git-репозиторием (если да, создайте/проверьте `.gitignore`):
 
      ```sh
      git rev-parse --git-dir 2>/dev/null
      ```
 
-   - Check if Dockerfile* exists or Docker in plan.md → create/verify .dockerignore
-   - Check if .eslintrc* exists → create/verify .eslintignore
-   - Check if eslint.config.* exists → ensure the config's `ignores` entries cover required patterns
-   - Check if .prettierrc* exists → create/verify .prettierignore
-   - Check if .npmrc or package.json exists → create/verify .npmignore (if publishing)
-   - Check if terraform files (*.tf) exist → create/verify .terraformignore
-   - Check if .helmignore needed (helm charts present) → create/verify .helmignore
+   - Проверьте, существует ли `Dockerfile*` или упоминается Docker в `plan.md` → создайте/проверьте `.dockerignore`
+   - Проверьте, существует ли `.eslintrc*` → создайте/проверьте `.eslintignore`
+   - Проверьте, существует ли `eslint.config.*` → убедитесь, что записи `ignores` в конфиге покрывают требуемые шаблоны
+   - Проверьте, существует ли `.prettierrc*` → создайте/проверьте `.prettierignore`
+   - Проверьте, существует ли `.npmrc` или `package.json` → создайте/проверьте `.npmignore` (если планируется публикация)
+   - Проверьте, существуют ли файлы terraform (`*.tf`) → создайте/проверьте `.terraformignore`
+   - Проверьте, нужен ли `.helmignore` (присутствуют helm charts) → создайте/проверьте `.helmignore`
 
-   **If ignore file already exists**: Verify it contains essential patterns, append missing critical patterns only
-   **If ignore file missing**: Create with full pattern set for detected technology
+   **Если файл игнорирования уже существует**: Проверьте, содержит ли он основные шаблоны, добавьте только недостающие критические шаблоны
+   **Если файл игнорирования отсутствует**: Создайте с полным набором шаблонов для обнаруженной технологии
 
-   **Common Patterns by Technology** (from plan.md tech stack):
+   **Общие шаблоны по технологиям** (на основе стека в `plan.md`):
    - **Node.js/JavaScript/TypeScript**: `node_modules/`, `dist/`, `build/`, `*.log`, `.env*`
    - **Python**: `__pycache__/`, `*.pyc`, `.venv/`, `venv/`, `dist/`, `*.egg-info/`
    - **Java**: `target/`, `*.class`, `*.jar`, `.gradle/`, `build/`
@@ -91,48 +91,48 @@ You **MUST** consider the user input before proceeding (if not empty).
    - **C**: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.a`, `*.so`, `*.exe`, `Makefile`, `config.log`, `.idea/`, `*.log`, `.env*`
    - **Swift**: `.build/`, `DerivedData/`, `*.swiftpm/`, `Packages/`
    - **R**: `.Rproj.user/`, `.Rhistory`, `.RData`, `.Ruserdata`, `*.Rproj`, `packrat/`, `renv/`
-   - **Universal**: `.DS_Store`, `Thumbs.db`, `*.tmp`, `*.swp`, `.vscode/`, `.idea/`
+   - **Универсальные**: `.DS_Store`, `Thumbs.db`, `*.tmp`, `*.swp`, `.vscode/`, `.idea/`
 
-   **Tool-Specific Patterns**:
+   **Специфичные для инструментов шаблоны**:
    - **Docker**: `node_modules/`, `.git/`, `Dockerfile*`, `.dockerignore`, `*.log*`, `.env*`, `coverage/`
    - **ESLint**: `node_modules/`, `dist/`, `build/`, `coverage/`, `*.min.js`
    - **Prettier**: `node_modules/`, `dist/`, `build/`, `coverage/`, `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`
    - **Terraform**: `.terraform/`, `*.tfstate*`, `*.tfvars`, `.terraform.lock.hcl`
    - **Kubernetes/k8s**: `*.secret.yaml`, `secrets/`, `.kube/`, `kubeconfig*`, `*.key`, `*.crt`
 
-5. Parse tasks.md structure and extract:
-   - **Task phases**: Setup, Tests, Core, Integration, Polish
-   - **Task dependencies**: Sequential vs parallel execution rules
-   - **Task details**: ID, description, file paths, parallel markers [P]
-   - **Execution flow**: Order and dependency requirements
+5. Разберите структуру `tasks.md` и извлеките:
+   - **Фазы задач**: Настройка (Setup), Тесты (Tests), Ядро (Core), Интеграция (Integration), Полировка (Polish)
+   - **Зависимости задач**: Правила последовательного и параллельного выполнения
+   - **Детали задач**: ID, описание, пути к файлам, маркеры параллельности [P]
+   - **Поток выполнения**: Порядок и требования к зависимостям
 
-6. Execute implementation following the task plan:
-   - **Phase-by-phase execution**: Complete each phase before moving to the next
-   - **Respect dependencies**: Run sequential tasks in order, parallel tasks [P] can run together  
-   - **Follow TDD approach**: Execute test tasks before their corresponding implementation tasks
-   - **File-based coordination**: Tasks affecting the same files must run sequentially
-   - **Validation checkpoints**: Verify each phase completion before proceeding
+6. Выполните реализацию, следуя плану задач:
+   - **Пофазное выполнение**: Завершите каждую фазу перед переходом к следующей
+   - **Соблюдайте зависимости**: Запускайте последовательные задачи по порядку, параллельные задачи [P] могут выполняться вместе
+   - **Следуйте подходу TDD**: Выполняйте задачи тестирования перед соответствующими задачами реализации
+   - **Координация на основе файлов**: Задачи, затрагивающие одни и те же файлы, должны выполняться последовательно
+   - **Контрольные точки валидации**: Проверяйте завершение каждой фазы перед продолжением
 
-7. Implementation execution rules:
-   - **Setup first**: Initialize project structure, dependencies, configuration
-   - **Tests before code**: If you need to write tests for contracts, entities, and integration scenarios
-   - **Core development**: Implement models, services, CLI commands, endpoints
-   - **Integration work**: Database connections, middleware, logging, external services
-   - **Polish and validation**: Unit tests, performance optimization, documentation
+7. Правила выполнения реализации:
+   - **Сначала настройка**: Инициализируйте структуру проекта, зависимости, конфигурацию
+   - **Тесты перед кодом**: Если нужно написать тесты для контрактов, сущностей и сценариев интеграции
+   - **Разработка ядра**: Реализуйте модели, сервисы, CLI-команды, эндпоинты
+   - **Интеграционная работа**: Подключения к базам данных, middleware, логирование, внешние сервисы
+   - **Полировка и валидация**: Юнит-тесты, оптимизация производительности, документация
 
-8. Progress tracking and error handling:
-   - Report progress after each completed task
-   - Halt execution if any non-parallel task fails
-   - For parallel tasks [P], continue with successful tasks, report failed ones
-   - Provide clear error messages with context for debugging
-   - Suggest next steps if implementation cannot proceed
-   - **IMPORTANT** For completed tasks, make sure to mark the task off as [X] in the tasks file.
+8. Отслеживание прогресса и обработка ошибок:
+   - Сообщайте о прогрессе после каждой выполненной задачи
+   - Остановите выполнение, если любая непараллельная задача завершилась ошибкой
+   - Для параллельных задач [P] продолжайте с успешными задачами, сообщите о неудавшихся
+   - Предоставляйте четкие сообщения об ошибках с контекстом для отладки
+   - Предлагайте следующие шаги, если реализация не может быть продолжена
+   - **ВАЖНО** Для выполненных задач убедитесь, что отметили задачу как [X] в файле задач.
 
-9. Completion validation:
-   - Verify all required tasks are completed
-   - Check that implemented features match the original specification
-   - Validate that tests pass and coverage meets requirements
-   - Confirm the implementation follows the technical plan
-   - Report final status with summary of completed work
+9. Валидация завершения:
+   - Проверьте, что все требуемые задачи выполнены
+   - Убедитесь, что реализованные функции соответствуют исходной спецификации
+   - Проверьте, что тесты проходят и покрытие соответствует требованиям
+   - Подтвердите, что реализация следует техническому плану
+   - Сообщите финальный статус с кратким изложением выполненной работы
 
-Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.
+Примечание: Эта команда предполагает, что в `tasks.md` существует полная разбивка задач. Если задачи неполные или отсутствуют, предложите сначала запустить `/speckit.tasks` для регенерации списка задач.

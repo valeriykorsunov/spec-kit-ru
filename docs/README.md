@@ -1,35 +1,35 @@
-# Documentation
+# Документация
 
-This folder contains the documentation source files for Spec Kit, built using [DocFX](https://dotnet.github.io/docfx/).
+Эта папка содержит исходные файлы документации для Spec Kit, созданные с использованием [DocFX](https://dotnet.github.io/docfx/).
 
-## Building Locally
+## Локальная сборка
 
-To build the documentation locally:
+Чтобы собрать документацию локально:
 
-1. Install DocFX:
+1. Установите DocFX:
 
    ```bash
    dotnet tool install -g docfx
    ```
 
-2. Build the documentation:
+2. Соберите документацию:
 
    ```bash
    cd docs
    docfx docfx.json --serve
    ```
 
-3. Open your browser to `http://localhost:8080` to view the documentation.
+3. Откройте браузер по адресу `http://localhost:8080` для просмотра документации.
 
-## Structure
+## Структура
 
-- `docfx.json` - DocFX configuration file
-- `index.md` - Main documentation homepage
-- `toc.yml` - Table of contents configuration
-- `installation.md` - Installation guide
-- `quickstart.md` - Quick start guide
-- `_site/` - Generated documentation output (ignored by git)
+- `docfx.json` - Файл конфигурации DocFX
+- `index.md` - Главная страница документации
+- `toc.yml` - Конфигурация оглавления
+- `installation.md` - Руководство по установке
+- `quickstart.md` - Краткое руководство
+- `_site/` - Сгенерированная документация (игнорируется git)
 
-## Deployment
+## Развертывание
 
-Documentation is automatically built and deployed to GitHub Pages when changes are pushed to the `main` branch. The workflow is defined in `.github/workflows/docs.yml`.
+Документация автоматически собирается и развертывается на GitHub Pages при отправке изменений в ветку `main`. Рабочий процесс определен в `.github/workflows/docs.yml`.

@@ -1,50 +1,50 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Конституция [PROJECT_NAME]
+<!-- Пример: Конституция Spec, Конституция TaskFlow и т.д. -->
 
-## Core Principles
+## Основные принципы
 
 ### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
+<!-- Пример: I. Библиотека-Первична (Library-First) -->
 [PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+<!-- Пример: Каждая фича начинается как отдельная библиотека; Библиотеки должны быть самодостаточными, независимо тестируемыми, документированными; Требуется четкая цель - никаких "организационных" библиотек без кода -->
 
 ### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
+<!-- Пример: II. CLI Интерфейс -->
 [PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+<!-- Пример: Каждая библиотека предоставляет функционал через CLI; Протокол ввода/вывода текста: stdin/args → stdout, ошибки → stderr; Поддержка JSON + человекочитаемых форматов -->
 
 ### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+<!-- Пример: III. Тесты-Прежде-Всего (НЕ ОБСУЖДАЕТСЯ) -->
 [PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+<!-- Пример: TDD обязательно: Написаны тесты → Одобрены пользователем → Тесты падают → Затем реализация; Цикл Red-Green-Refactor строго соблюдается -->
 
 ### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
+<!-- Пример: IV. Интеграционное Тестирование -->
 [PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+<!-- Пример: Области, требующие интеграционных тестов: Тесты контрактов новых библиотек, Изменения контрактов, Межсервисное взаимодействие, Общие схемы -->
 
 ### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+<!-- Пример: V. Наблюдаемость, VI. Версионирование и Ломающие Изменения, VII. Простота -->
 [PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+<!-- Пример: Текстовый ввод/вывод обеспечивает отладку; Требуется структурированное логирование; Или: формат MAJOR.MINOR.BUILD; Или: Начинать с простого, принципы YAGNI -->
 
 ## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+<!-- Пример: Дополнительные Ограничения, Требования Безопасности, Стандарты Производительности и т.д. -->
 
 [SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+<!-- Пример: Требования к технологическому стеку, стандарты соответствия, политики развертывания и т.д. -->
 
 ## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+<!-- Пример: Рабочий Процесс Разработки, Процесс Ревью, Контроль Качества (Quality Gates) и т.д. -->
 
 [SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+<!-- Пример: Требования к код-ревью, тестовые барьеры, процесс утверждения деплоя и т.д. -->
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+## Управление (Governance)
+<!-- Пример: Конституция имеет приоритет над всеми другими практиками; Поправки требуют документации, одобрения, плана миграции -->
 
 [GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+<!-- Пример: Все PR/ревью должны проверять соответствие; Сложность должна быть обоснована; Используйте [GUIDANCE_FILE] для руководства по разработке во время выполнения -->
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Версия**: [CONSTITUTION_VERSION] | **Утверждена**: [RATIFICATION_DATE] | **Последняя поправка**: [LAST_AMENDED_DATE]
+<!-- Пример: Версия: 2.1.1 | Утверждена: 2025-06-13 | Последняя поправка: 2025-07-16 -->

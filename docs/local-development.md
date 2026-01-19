@@ -1,175 +1,99 @@
-# Local Development Guide
+# Руководство по локальной разработке
 
-This guide shows how to iterate on the `specify` CLI locally without publishing a release or committing to `main` first.
+Это руководство показывает, как итерировать `specify` CLI локально, не публикуя релиз и не делая коммит в `main`.
 
-> Scripts now have both Bash (`.sh`) and PowerShell (`.ps1`) variants. The CLI auto-selects based on OS unless you pass `--script sh|ps`.
+> Скрипты теперь имеют варианты как для Bash (`.sh`), так и для PowerShell (`.ps1`). CLI автоматически выбирает нужный вариант в зависимости от ОС, если вы не передадите флаг `--script sh|ps`.
 
-## 1. Clone and Switch Branches
+## 1. Клонирование и переключение веток
 
 ```bash
-git clone https://github.com/github/spec-kit.git
+git clone https://github.com/valeriykorsunov/spec-kit-ru.git
 cd spec-kit
-# Work on a feature branch
+# Работайте в ветке фичи
 git checkout -b your-feature-branch
 ```
 
-## 2. Run the CLI Directly (Fastest Feedback)
+## 2. Запуск CLI напрямую (самая быстрая обратная связь)
 
-You can execute the CLI via the module entrypoint without installing anything:
+Вы можете выполнить CLI через точку входа модуля, ничего не устанавливая:
 
 ```bash
-# From repo root
+# Из корня репозитория
 python -m src.specify_cli --help
 python -m src.specify_cli init demo-project --ai claude --ignore-agent-tools --script sh
 ```
 
-If you prefer invoking the script file style (uses shebang):
+Если вы предпочитаете стиль вызова файла скрипта (использует shebang):
 
 ```bash
 python src/specify_cli/__init__.py init demo-project --script ps
 ```
 
-## 3. Use Editable Install (Isolated Environment)
+## 3. Использование Editable Install (Изолированная среда)
 
-Create an isolated environment using `uv` so dependencies resolve exactly like end users get them:
+Создайте изолированную среду с помощью `uv`, чтобы зависимости разрешались именно так, как их получают конечные пользователи:
 
 ```bash
-# Create & activate virtual env (uv auto-manages .venv)
+# Создать и активировать виртуальное окружение (uv автоматически управляет .venv)
 uv venv
-source .venv/bin/activate  # or on Windows PowerShell: .venv\Scripts\Activate.ps1
+source .venv/bin/activate  # или в Windows PowerShell: .venv\Scripts\Activate.ps1
 
-# Install project in editable mode
+# Установить проект в редактируемом режиме
 uv pip install -e .
 
-# Now 'specify' entrypoint is available
+# Теперь точка входа 'specify' доступна
 specify --help
 ```
 
-Re-running after code edits requires no reinstall because of editable mode.
+Повторный запуск после редактирования кода не требует переустановки благодаря редактируемому режиму.
 
-## 4. Invoke with uvx Directly From Git (Current Branch)
+## 4. Вызов с помощью uvx напрямую из Git (Текущая ветка)
 
-`uvx` can run from a local path (or a Git ref) to simulate user flows:
+`uvx` может запускаться из локального пути (или ссылки Git) для симуляции пользовательских потоков:
 
 ```bash
 uvx --from . specify init demo-uvx --ai copilot --ignore-agent-tools --script sh
 ```
 
-You can also point uvx at a specific branch without merging:
+Вы также можете направить uvx на конкретную ветку без слияния:
 
 ```bash
-# Push your working branch first
+# Сначала отправьте вашу рабочую ветку
 git push origin your-feature-branch
-uvx --from git+https://github.com/github/spec-kit.git@your-feature-branch specify init demo-branch-test --script ps
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git@your-feature-branch specify init demo-branch-test --script ps
 ```
 
-### 4a. Absolute Path uvx (Run From Anywhere)
+### 4a. Абсолютный путь uvx (Запуск откуда угодно)
 
-If you're in another directory, use an absolute path instead of `.`:
+Если вы находитесь в другом каталоге, используйте абсолютный путь вместо `.`:
 
 ```bash
 uvx --from /mnt/c/GitHub/spec-kit specify --help
 uvx --from /mnt/c/GitHub/spec-kit specify init demo-anywhere --ai copilot --ignore-agent-tools --script sh
 ```
 
-Set an environment variable for convenience:
+Установите переменную окружения для удобства:
 
 ```bash
 export SPEC_KIT_SRC=/mnt/c/GitHub/spec-kit
 uvx --from "$SPEC_KIT_SRC" specify init demo-env --ai copilot --ignore-agent-tools --script ps
 ```
 
-(Optional) Define a shell function:
+(Опционально) Определите функцию оболочки:
 
 ```bash
 specify-dev() { uvx --from /mnt/c/GitHub/spec-kit specify "$@"; }
-# Then
+# Затем
 specify-dev --help
 ```
 
-## 5. Testing Script Permission Logic
+## 5. Тестирование логики прав доступа скриптов
 
-After running an `init`, check that shell scripts are executable on POSIX systems:
+После запуска `init`, проверьте, что shell-скрипты исполняемые в POSIX системах:
 
 ```bash
 ls -l scripts | grep .sh
-# Expect owner execute bit (e.g. -rwxr-xr-x)
+# Ожидается бит выполнения у владельца (например, -rwxr-xr-x)
 ```
 
-On Windows you will instead use the `.ps1` scripts (no chmod needed).
-
-## 6. Run Lint / Basic Checks (Add Your Own)
-
-Currently no enforced lint config is bundled, but you can quickly sanity check importability:
-
-```bash
-python -c "import specify_cli; print('Import OK')"
-```
-
-## 7. Build a Wheel Locally (Optional)
-
-Validate packaging before publishing:
-
-```bash
-uv build
-ls dist/
-```
-
-Install the built artifact into a fresh throwaway environment if needed.
-
-## 8. Using a Temporary Workspace
-
-When testing `init --here` in a dirty directory, create a temp workspace:
-
-```bash
-mkdir /tmp/spec-test && cd /tmp/spec-test
-python -m src.specify_cli init --here --ai claude --ignore-agent-tools --script sh  # if repo copied here
-```
-
-Or copy only the modified CLI portion if you want a lighter sandbox.
-
-## 9. Debug Network / TLS Skips
-
-If you need to bypass TLS validation while experimenting:
-
-```bash
-specify check --skip-tls
-specify init demo --skip-tls --ai gemini --ignore-agent-tools --script ps
-```
-
-(Use only for local experimentation.)
-
-## 10. Rapid Edit Loop Summary
-
-| Action | Command |
-|--------|---------|
-| Run CLI directly | `python -m src.specify_cli --help` |
-| Editable install | `uv pip install -e .` then `specify ...` |
-| Local uvx run (repo root) | `uvx --from . specify ...` |
-| Local uvx run (abs path) | `uvx --from /mnt/c/GitHub/spec-kit specify ...` |
-| Git branch uvx | `uvx --from git+URL@branch specify ...` |
-| Build wheel | `uv build` |
-
-## 11. Cleaning Up
-
-Remove build artifacts / virtual env quickly:
-
-```bash
-rm -rf .venv dist build *.egg-info
-```
-
-## 12. Common Issues
-
-| Symptom | Fix |
-|---------|-----|
-| `ModuleNotFoundError: typer` | Run `uv pip install -e .` |
-| Scripts not executable (Linux) | Re-run init or `chmod +x scripts/*.sh` |
-| Git step skipped | You passed `--no-git` or Git not installed |
-| Wrong script type downloaded | Pass `--script sh` or `--script ps` explicitly |
-| TLS errors on corporate network | Try `--skip-tls` (not for production) |
-
-## 13. Next Steps
-
-- Update docs and run through Quick Start using your modified CLI
-- Open a PR when satisfied
-- (Optional) Tag a release once changes land in `main`
+В Windows вы вместо этого будете использовать скрипты `.ps1` (chmod не требуется).

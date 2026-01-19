@@ -1,18 +1,18 @@
 #!/usr/bin/env pwsh
 
-# Consolidated prerequisite checking script (PowerShell)
+# Скрипт проверки предварительных условий (PowerShell)
 #
-# This script provides unified prerequisite checking for Spec-Driven Development workflow.
-# It replaces the functionality previously spread across multiple scripts.
+# Этот скрипт обеспечивает единую проверку предварительных условий для рабочего процесса разработки на основе спецификаций (Spec-Driven Development).
+# Он заменяет функциональность, ранее разбросанную по нескольким скриптам.
 #
-# Usage: ./check-prerequisites.ps1 [OPTIONS]
+# Использование: ./check-prerequisites.ps1 [ОПЦИИ]
 #
-# OPTIONS:
-#   -Json               Output in JSON format
-#   -RequireTasks       Require tasks.md to exist (for implementation phase)
-#   -IncludeTasks       Include tasks.md in AVAILABLE_DOCS list
-#   -PathsOnly          Only output path variables (no validation)
-#   -Help, -h           Show help message
+# ОПЦИИ:
+#   -Json               Вывод в формате JSON
+#   -RequireTasks       Требовать наличие tasks.md (для этапа реализации)
+#   -IncludeTasks       Включить tasks.md в список AVAILABLE_DOCS
+#   -PathsOnly          Вывести только переменные путей (без валидации)
+#   -Help, -h           Показать справку
 
 [CmdletBinding()]
 param(
@@ -25,45 +25,45 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-# Show help if requested
+# Показать справку, если запрошено
 if ($Help) {
     Write-Output @"
-Usage: check-prerequisites.ps1 [OPTIONS]
+Использование: check-prerequisites.ps1 [ОПЦИИ]
 
-Consolidated prerequisite checking for Spec-Driven Development workflow.
+Единая проверка предварительных условий для рабочего процесса Spec-Driven Development.
 
-OPTIONS:
-  -Json               Output in JSON format
-  -RequireTasks       Require tasks.md to exist (for implementation phase)
-  -IncludeTasks       Include tasks.md in AVAILABLE_DOCS list
-  -PathsOnly          Only output path variables (no prerequisite validation)
-  -Help, -h           Show this help message
+ОПЦИИ:
+  -Json               Вывод в формате JSON
+  -RequireTasks       Требовать наличие tasks.md (для этапа реализации)
+  -IncludeTasks       Включить tasks.md в список AVAILABLE_DOCS
+  -PathsOnly          Вывести только переменные путей (без проверки условий)
+  -Help, -h           Показать это справочное сообщение
 
-EXAMPLES:
-  # Check task prerequisites (plan.md required)
+ПРИМЕРЫ:
+  # Проверка условий для задач (требуется plan.md)
   .\check-prerequisites.ps1 -Json
   
-  # Check implementation prerequisites (plan.md + tasks.md required)
+  # Проверка условий реализации (требуются plan.md + tasks.md)
   .\check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks
   
-  # Get feature paths only (no validation)
+  # Получить только пути к функциональности (без валидации)
   .\check-prerequisites.ps1 -PathsOnly
 
 "@
     exit 0
 }
 
-# Source common functions
+# Подключение общих функций
 . "$PSScriptRoot/common.ps1"
 
-# Get feature paths and validate branch
+# Получение путей функциональности и проверка ветки
 $paths = Get-FeaturePathsEnv
 
 if (-not (Test-FeatureBranch -Branch $paths.CURRENT_BRANCH -HasGit:$paths.HAS_GIT)) { 
     exit 1 
 }
 
-# If paths-only mode, output paths and exit (support combined -Json -PathsOnly)
+# Если режим только путей, вывести пути и выйти (поддержка комбинации -Json -PathsOnly)
 if ($PathsOnly) {
     if ($Json) {
         [PSCustomObject]@{
@@ -85,58 +85,58 @@ if ($PathsOnly) {
     exit 0
 }
 
-# Validate required directories and files
+# Проверка обязательных директорий и файлов
 if (-not (Test-Path $paths.FEATURE_DIR -PathType Container)) {
-    Write-Output "ERROR: Feature directory not found: $($paths.FEATURE_DIR)"
-    Write-Output "Run /speckit.specify first to create the feature structure."
+    Write-Output "ОШИБКА: Директория функциональности не найдена: $($paths.FEATURE_DIR)"
+    Write-Output "Сначала запустите /speckit.specify, чтобы создать структуру функциональности."
     exit 1
 }
 
 if (-not (Test-Path $paths.IMPL_PLAN -PathType Leaf)) {
-    Write-Output "ERROR: plan.md not found in $($paths.FEATURE_DIR)"
-    Write-Output "Run /speckit.plan first to create the implementation plan."
+    Write-Output "ОШИБКА: plan.md не найден в $($paths.FEATURE_DIR)"
+    Write-Output "Сначала запустите /speckit.plan, чтобы создать план реализации."
     exit 1
 }
 
-# Check for tasks.md if required
+# Проверка tasks.md, если требуется
 if ($RequireTasks -and -not (Test-Path $paths.TASKS -PathType Leaf)) {
-    Write-Output "ERROR: tasks.md not found in $($paths.FEATURE_DIR)"
-    Write-Output "Run /speckit.tasks first to create the task list."
+    Write-Output "ОШИБКА: tasks.md не найден в $($paths.FEATURE_DIR)"
+    Write-Output "Сначала запустите /speckit.tasks, чтобы создать список задач."
     exit 1
 }
 
-# Build list of available documents
+# Построение списка доступных документов
 $docs = @()
 
-# Always check these optional docs
+# Всегда проверять эти необязательные документы
 if (Test-Path $paths.RESEARCH) { $docs += 'research.md' }
 if (Test-Path $paths.DATA_MODEL) { $docs += 'data-model.md' }
 
-# Check contracts directory (only if it exists and has files)
+# Проверка директории contracts (только если она существует и содержит файлы)
 if ((Test-Path $paths.CONTRACTS_DIR) -and (Get-ChildItem -Path $paths.CONTRACTS_DIR -ErrorAction SilentlyContinue | Select-Object -First 1)) { 
     $docs += 'contracts/' 
 }
 
 if (Test-Path $paths.QUICKSTART) { $docs += 'quickstart.md' }
 
-# Include tasks.md if requested and it exists
+# Включить tasks.md, если запрошено и файл существует
 if ($IncludeTasks -and (Test-Path $paths.TASKS)) { 
     $docs += 'tasks.md' 
 }
 
-# Output results
+# Вывод результатов
 if ($Json) {
-    # JSON output
+    # Вывод в JSON
     [PSCustomObject]@{ 
         FEATURE_DIR = $paths.FEATURE_DIR
         AVAILABLE_DOCS = $docs 
     } | ConvertTo-Json -Compress
 } else {
-    # Text output
+    # Текстовый вывод
     Write-Output "FEATURE_DIR:$($paths.FEATURE_DIR)"
     Write-Output "AVAILABLE_DOCS:"
     
-    # Show status of each potential document
+    # Показать статус каждого потенциального документа
     Test-FileExists -Path $paths.RESEARCH -Description 'research.md' | Out-Null
     Test-FileExists -Path $paths.DATA_MODEL -Description 'data-model.md' | Out-Null
     Test-DirHasFiles -Path $paths.CONTRACTS_DIR -Description 'contracts/' | Out-Null

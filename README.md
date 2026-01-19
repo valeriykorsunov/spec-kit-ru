@@ -51,7 +51,7 @@
 Установите один раз и используйте везде:
 
 ```bash
-uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+uv tool install specify-cli --from git+https://github.com/valeriykorsunov/spec-kit-ru.git
 ```
 
 Затем используйте инструмент напрямую:
@@ -72,7 +72,7 @@ specify check
 Чтобы обновить Specify, см. [Руководство по обновлению](./docs/upgrade.md) для подробных инструкций. Быстрое обновление:
 
 ```bash
-uv tool install specify-cli --force --from git+https://github.com/github/spec-kit.git
+uv tool install specify-cli --force --from git+https://github.com/valeriykorsunov/spec-kit-ru.git
 ```
 
 #### Вариант 2: Одноразовое использование
@@ -80,7 +80,7 @@ uv tool install specify-cli --force --from git+https://github.com/github/spec-ki
 Запуск напрямую без установки:
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <ИМЯ_ПРОЕКТА>
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <ИМЯ_ПРОЕКТА>
 ```
 
 **Преимущества постоянной установки:**

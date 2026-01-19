@@ -1,82 +1,82 @@
-# Installation Guide
+# Руководство по установке
 
-## Prerequisites
+## Предварительные требования
 
-- **Linux/macOS** (or Windows; PowerShell scripts now supported without WSL)
-- AI coding agent: [Claude Code](https://www.anthropic.com/claude-code), [GitHub Copilot](https://code.visualstudio.com/), [Codebuddy CLI](https://www.codebuddy.ai/cli) or [Gemini CLI](https://github.com/google-gemini/gemini-cli)
-- [uv](https://docs.astral.sh/uv/) for package management
+- **Linux/macOS** (или Windows; скрипты PowerShell теперь поддерживаются без WSL)
+- ИИ-агент для кодинга: [Claude Code](https://www.anthropic.com/claude-code), [GitHub Copilot](https://code.visualstudio.com/), [Codebuddy CLI](https://www.codebuddy.ai/cli) или [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+- [uv](https://docs.astral.sh/uv/) для управления пакетами
 - [Python 3.11+](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
 
-## Installation
+## Установка
 
-### Initialize a New Project
+### Инициализация нового проекта
 
-The easiest way to get started is to initialize a new project:
-
-```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME>
-```
-
-Or initialize in the current directory:
+Самый простой способ начать — инициализировать новый проект:
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init .
-# or use the --here flag
-uvx --from git+https://github.com/github/spec-kit.git specify init --here
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <PROJECT_NAME>
 ```
 
-### Specify AI Agent
-
-You can proactively specify your AI agent during initialization:
+Или инициализировать в текущем каталоге:
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <project_name> --ai claude
-uvx --from git+https://github.com/github/spec-kit.git specify init <project_name> --ai gemini
-uvx --from git+https://github.com/github/spec-kit.git specify init <project_name> --ai copilot
-uvx --from git+https://github.com/github/spec-kit.git specify init <project_name> --ai codebuddy
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init .
+# или используйте флаг --here
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init --here
 ```
 
-### Specify Script Type (Shell vs PowerShell)
+### Указание ИИ-агента
 
-All automation scripts now have both Bash (`.sh`) and PowerShell (`.ps1`) variants.
-
-Auto behavior:
-
-- Windows default: `ps`
-- Other OS default: `sh`
-- Interactive mode: you'll be prompted unless you pass `--script`
-
-Force a specific script type:
+Вы можете заранее указать своего ИИ-агента во время инициализации:
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <project_name> --script sh
-uvx --from git+https://github.com/github/spec-kit.git specify init <project_name> --script ps
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <project_name> --ai claude
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <project_name> --ai gemini
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <project_name> --ai copilot
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <project_name> --ai codebuddy
 ```
 
-### Ignore Agent Tools Check
+### Указание типа скрипта (Shell vs PowerShell)
 
-If you prefer to get the templates without checking for the right tools:
+Все скрипты автоматизации теперь имеют варианты как для Bash (`.sh`), так и для PowerShell (`.ps1`).
+
+Автоматическое поведение:
+
+- Windows по умолчанию: `ps`
+- Другие ОС по умолчанию: `sh`
+- Интерактивный режим: вам будет предложено выбрать, если вы не передадите `--script`
+
+Принудительный выбор типа скрипта:
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <project_name> --ai claude --ignore-agent-tools
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <project_name> --script sh
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <project_name> --script ps
 ```
 
-## Verification
+### Игнорирование проверки инструментов агента
 
-After initialization, you should see the following commands available in your AI agent:
+Если вы предпочитаете получить шаблоны без проверки наличия правильных инструментов:
 
-- `/speckit.specify` - Create specifications
-- `/speckit.plan` - Generate implementation plans  
-- `/speckit.tasks` - Break down into actionable tasks
+```bash
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <project_name> --ai claude --ignore-agent-tools
+```
 
-The `.specify/scripts` directory will contain both `.sh` and `.ps1` scripts.
+## Проверка
 
-## Troubleshooting
+После инициализации вы должны увидеть следующие команды, доступные в вашем ИИ-агенте:
 
-### Git Credential Manager on Linux
+- `/speckit.specify` - Создать спецификации
+- `/speckit.plan` - Сгенерировать планы реализации
+- `/speckit.tasks` - Разбить на выполнимые задачи
 
-If you're having issues with Git authentication on Linux, you can install Git Credential Manager:
+Каталог `.specify/scripts` будет содержать скрипты как `.sh`, так и `.ps1`.
+
+## Устранение неполадок
+
+### Git Credential Manager на Linux
+
+Если у вас возникли проблемы с аутентификацией Git на Linux, вы можете установить Git Credential Manager:
 
 ```bash
 #!/usr/bin/env bash

@@ -1,164 +1,158 @@
-# Quick Start Guide
+# Краткое руководство
 
-This guide will help you get started with Spec-Driven Development using Spec Kit.
+Это руководство поможет вам начать работу со Spec-Driven Development (разработкой на основе спецификаций) с использованием Spec Kit.
 
 > [!NOTE]
-> All automation scripts now provide both Bash (`.sh`) and PowerShell (`.ps1`) variants. The `specify` CLI auto-selects based on OS unless you pass `--script sh|ps`.
+> Все скрипты автоматизации теперь имеют варианты как для Bash (`.sh`), так и для PowerShell (`.ps1`). CLI `specify` автоматически выбирает нужный вариант в зависимости от ОС, если вы не передадите флаг `--script sh|ps`.
 
-## The 6-Step Process
+## Процесс из 6 шагов
 
 > [!TIP]
-> **Context Awareness**: Spec Kit commands automatically detect the active feature based on your current Git branch (e.g., `001-feature-name`). To switch between different specifications, simply switch Git branches.
+> **Осведомленность о контексте**: Команды Spec Kit автоматически определяют активную фичу на основе вашей текущей Git-ветки (например, `001-feature-name`). Чтобы переключаться между разными спецификациями, просто переключайте Git-ветки.
 
-### Step 1: Install Specify
+### Шаг 1: Установка Specify
 
-**In your terminal**, run the `specify` CLI command to initialize your project:
-
-```bash
-# Create a new project directory
-uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME>
-
-# OR initialize in the current directory
-uvx --from git+https://github.com/github/spec-kit.git specify init .
-```
-
-Pick script type explicitly (optional):
+**В вашем терминале** запустите команду CLI `specify`, чтобы инициализировать ваш проект:
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME> --script ps  # Force PowerShell
-uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME> --script sh  # Force POSIX shell
+# Создать новый каталог проекта
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <PROJECT_NAME>
+
+# ИЛИ инициализировать в текущем каталоге
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init .
 ```
 
-### Step 2: Define Your Constitution
-
-**In your AI Agent's chat interface**, use the `/speckit.constitution` slash command to establish the core rules and principles for your project. You should provide your project's specific principles as arguments.
-
-```markdown
-/speckit.constitution This project follows a "Library-First" approach. All features must be implemented as standalone libraries first. We use TDD strictly. We prefer functional programming patterns.
-```
-
-### Step 3: Create the Spec
-
-**In the chat**, use the `/speckit.specify` slash command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
-
-```markdown
-/speckit.specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
-```
-
-### Step 4: Refine the Spec
-
-**In the chat**, use the `/speckit.clarify` slash command to identify and resolve ambiguities in your specification. You can provide specific focus areas as arguments.
+Явно выберите тип скрипта (необязательно):
 
 ```bash
-/speckit.clarify Focus on security and performance requirements.
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <PROJECT_NAME> --script ps  # Принудительно использовать PowerShell
+uvx --from git+https://github.com/valeriykorsunov/spec-kit-ru.git specify init <PROJECT_NAME> --script sh  # Принудительно использовать POSIX shell
 ```
 
-### Step 5: Create a Technical Implementation Plan
+### Шаг 2: Определите вашу Конституцию
 
-**In the chat**, use the `/speckit.plan` slash command to provide your tech stack and architecture choices.
+**В чат-интерфейсе вашего ИИ-агента** используйте слэш-команду `/speckit.constitution`, чтобы установить основные правила и принципы для вашего проекта. Вы должны предоставить конкретные принципы вашего проекта в качестве аргументов.
 
 ```markdown
-/speckit.plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
+/speckit.constitution Этот проект следует подходу "Library-First" (сначала библиотека). Все фичи должны быть сначала реализованы как отдельные библиотеки. Мы строго используем TDD. Мы предпочитаем паттерны функционального программирования.
 ```
 
-### Step 6: Break Down and Implement
+### Шаг 3: Создайте Спецификацию
 
-**In the chat**, use the `/speckit.tasks` slash command to create an actionable task list.
+**В чате** используйте слэш-команду `/speckit.specify`, чтобы описать, что вы хотите создать. Сосредоточьтесь на **что** и **почему**, а не на технологическом стеке.
+
+```markdown
+/speckit.specify Создай приложение, которое поможет мне организовать мои фотографии в отдельные фотоальбомы. Альбомы группируются по дате и могут быть переорганизованы перетаскиванием на главной странице. Альбомы никогда не находятся внутри других вложенных альбомов. Внутри каждого альбома фотографии просматриваются в плиточном интерфейсе.
+```
+
+### Шаг 4: Уточните Спецификацию
+
+**В чате** используйте слэш-команду `/speckit.clarify`, чтобы выявить и устранить неясности в вашей спецификации. Вы можете указать конкретные области внимания в качестве аргументов.
+
+```bash
+/speckit.clarify Сосредоточься на требованиях к безопасности и производительности.
+```
+
+### Шаг 5: Создайте План Технической Реализации
+
+**В чате** используйте слэш-команду `/speckit.plan`, чтобы предоставить ваш технологический стек и архитектурные решения.
+
+```markdown
+/speckit.plan Приложение использует Vite с минимальным количеством библиотек. Используй чистый HTML, CSS и JavaScript насколько это возможно. Изображения никуда не загружаются, а метаданные хранятся в локальной базе данных SQLite.
+```
+
+### Шаг 6: Декомпозиция и Реализация
+
+**В чате** используйте слэш-команду `/speckit.tasks`, чтобы создать список задач для выполнения.
 
 ```markdown
 /speckit.tasks
 ```
 
-Optionally, validate the plan with `/speckit.analyze`:
+Опционально, проверьте план с помощью `/speckit.analyze`:
 
 ```markdown
 /speckit.analyze
 ```
 
-Then, use the `/speckit.implement` slash command to execute the plan.
+Затем используйте слэш-команду `/speckit.implement` для выполнения плана.
 
 ```markdown
 /speckit.implement
 ```
 
-## Detailed Example: Building Taskify
+## Подробный пример: Создание Taskify
 
-Here's a complete example of building a team productivity platform:
+Вот полный пример создания платформы для продуктивности команды:
 
-### Step 1: Define Constitution
+### Шаг 1: Определите Конституцию
 
-Initialize the project's constitution to set ground rules:
+Инициализируйте конституцию проекта, чтобы установить базовые правила:
 
 ```markdown
-/speckit.constitution Taskify is a "Security-First" application. All user inputs must be validated. We use a microservices architecture. Code must be fully documented.
+/speckit.constitution Taskify — это приложение, ориентированное на безопасность ("Security-First"). Все вводы пользователей должны проверяться. Мы используем микросервисную архитектуру. Код должен быть полностью задокументирован.
 ```
 
-### Step 2: Define Requirements with `/speckit.specify`
+### Шаг 2: Определите Требования с помощью `/speckit.specify`
 
 ```text
-Develop Taskify, a team productivity platform. It should allow users to create projects, add team members,
-assign tasks, comment and move tasks between boards in Kanban style. In this initial phase for this feature,
-let's call it "Create Taskify," let's have multiple users but the users will be declared ahead of time, predefined.
-I want five users in two different categories, one product manager and four engineers. Let's create three
-different sample projects. Let's have the standard Kanban columns for the status of each task, such as "To Do,"
-"In Progress," "In Review," and "Done." There will be no login for this application as this is just the very
-first testing thing to ensure that our basic features are set up.
+Разработай Taskify, платформу для продуктивности команды. Она должна позволять пользователям создавать проекты, добавлять членов команды, назначать задачи, комментировать и перемещать задачи между досками в стиле Канбан. На начальном этапе для этой фичи, назовем ее "Создание Taskify", пусть будет несколько пользователей, но пользователи будут объявлены заранее, предопределены. Я хочу пять пользователей двух разных категорий: один менеджер по продукту и четыре инженера. Давай создадим три разных примера проектов. Давай сделаем стандартные колонки Канбан для статуса каждой задачи, такие как "К выполнению", "В процессе", "На проверке" и "Готово". Для этого приложения не будет входа в систему, так как это просто самая первая тестовая вещь, чтобы убедиться, что наши базовые функции настроены.
 ```
 
-### Step 3: Refine the Specification
+### Шаг 3: Уточните Спецификацию
 
-Use the `/speckit.clarify` command to interactively resolve any ambiguities in your specification. You can also provide specific details you want to ensure are included.
+Используйте команду `/speckit.clarify`, чтобы интерактивно устранить любые неясности в вашей спецификации. Вы также можете предоставить конкретные детали, которые хотите обязательно включить.
 
 ```bash
-/speckit.clarify I want to clarify the task card details. For each task in the UI for a task card, you should be able to change the current status of the task between the different columns in the Kanban work board. You should be able to leave an unlimited number of comments for a particular card. You should be able to, from that task card, assign one of the valid users.
+/speckit.clarify Я хочу уточнить детали карточки задачи. Для каждой задачи в UI карточки задачи должна быть возможность менять текущий статус задачи между различными колонками на доске Канбан. Должна быть возможность оставлять неограниченное количество комментариев к конкретной карточке. Из этой карточки задачи должна быть возможность назначить одного из допустимых пользователей.
 ```
 
-You can continue to refine the spec with more details using `/speckit.clarify`:
+Вы можете продолжить уточнять спецификацию с большим количеством деталей, используя `/speckit.clarify`:
 
 ```bash
-/speckit.clarify When you first launch Taskify, it's going to give you a list of the five users to pick from. There will be no password required. When you click on a user, you go into the main view, which displays the list of projects. When you click on a project, you open the Kanban board for that project. You're going to see the columns. You'll be able to drag and drop cards back and forth between different columns. You will see any cards that are assigned to you, the currently logged in user, in a different color from all the other ones, so you can quickly see yours. You can edit any comments that you make, but you can't edit comments that other people made. You can delete any comments that you made, but you can't delete comments anybody else made.
+/speckit.clarify Когда вы впервые запускаете Taskify, он должен дать вам список из пяти пользователей на выбор. Пароль не требуется. Когда вы кликаете на пользователя, вы попадаете в главное представление, которое отображает список проектов. Когда вы кликаете на проект, вы открываете доску Канбан для этого проекта. Вы увидите колонки. Вы сможете перетаскивать карточки туда и обратно между различными колонками. Вы увидите любые карточки, назначенные вам (текущему залогиненному пользователю), в другом цвете, отличном от всех остальных, чтобы вы могли быстро видеть свои. Вы можете редактировать любые комментарии, которые вы сделали, но вы не можете редактировать комментарии, сделанные другими людьми. Вы можете удалять любые комментарии, которые вы сделали, но вы не можете удалять комментарии, сделанные кем-либо еще.
 ```
 
-### Step 4: Validate the Spec
+### Шаг 4: Проверьте Спецификацию
 
-Validate the specification checklist using the `/speckit.checklist` command:
+Проверьте чеклист спецификации с помощью команды `/speckit.checklist`:
 
 ```bash
 /speckit.checklist
 ```
 
-### Step 5: Generate Technical Plan with `/speckit.plan`
+### Шаг 5: Сгенерируйте Технический План с помощью `/speckit.plan`
 
-Be specific about your tech stack and technical requirements:
+Будьте конкретны в отношении вашего технологического стека и технических требований:
 
 ```bash
-/speckit.plan We are going to generate this using .NET Aspire, using Postgres as the database. The frontend should use Blazor server with drag-and-drop task boards, real-time updates. There should be a REST API created with a projects API, tasks API, and a notifications API.
+/speckit.plan Мы собираемся создать это с использованием .NET Aspire, используя Postgres в качестве базы данных. Фронтенд должен использовать Blazor server с досками задач drag-and-drop и обновлениями в реальном времени. Должен быть создан REST API с API проектов, API задач и API уведомлений.
 ```
 
-### Step 6: Validate and Implement
+### Шаг 6: Проверьте и Реализуйте
 
-Have your AI agent audit the implementation plan using `/speckit.analyze`:
+Попросите вашего ИИ-агента провести аудит плана реализации с помощью `/speckit.analyze`:
 
 ```bash
 /speckit.analyze
 ```
 
-Finally, implement the solution:
+Наконец, реализуйте решение:
 
 ```bash
 /speckit.implement
 ```
 
-## Key Principles
+## Ключевые принципы
 
-- **Be explicit** about what you're building and why
-- **Don't focus on tech stack** during specification phase
-- **Iterate and refine** your specifications before implementation
-- **Validate** the plan before coding begins
-- **Let the AI agent handle** the implementation details
+- **Будьте конкретны** в том, что вы создаете и почему
+- **Не фокусируйтесь на технологическом стеке** на этапе спецификации
+- **Итерируйте и уточняйте** ваши спецификации перед реализацией
+- **Проверяйте** план до начала написания кода
+- **Позвольте ИИ-агенту заниматься** деталями реализации
 
-## Next Steps
+## Следующие шаги
 
-- Read the [complete methodology](../spec-driven.md) for in-depth guidance
-- Check out [more examples](../templates) in the repository
-- Explore the [source code on GitHub](https://github.com/github/spec-kit)
+- Прочитайте [полную методологию](../spec-driven.md) для углубленного руководства
+- Посмотрите [больше примеров](../templates) в репозитории
+- Изучите [исходный код на GitHub](https://github.com/valeriykorsunov/spec-kit-ru)

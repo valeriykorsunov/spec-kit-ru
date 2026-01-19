@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
 
-# Consolidated prerequisite checking script
+# Скрипт проверки предварительных требований
 #
-# This script provides unified prerequisite checking for Spec-Driven Development workflow.
-# It replaces the functionality previously spread across multiple scripts.
+# Этот скрипт обеспечивает единую проверку предварительных требований для рабочего процесса Spec-Driven Development.
+# Он заменяет функциональность, ранее разбросанную по нескольким скриптам.
 #
-# Usage: ./check-prerequisites.sh [OPTIONS]
+# Использование: ./check-prerequisites.sh [ОПЦИИ]
 #
-# OPTIONS:
-#   --json              Output in JSON format
-#   --require-tasks     Require tasks.md to exist (for implementation phase)
-#   --include-tasks     Include tasks.md in AVAILABLE_DOCS list
-#   --paths-only        Only output path variables (no validation)
-#   --help, -h          Show help message
+# ОПЦИИ:
+#   --json              Вывод в формате JSON
+#   --require-tasks     Требовать наличие tasks.md (для этапа реализации)
+#   --include-tasks     Включить tasks.md в список AVAILABLE_DOCS
+#   --paths-only        Выводить только переменные путей (без валидации)
+#   --help, -h          Показать справку
 #
-# OUTPUTS:
-#   JSON mode: {"FEATURE_DIR":"...", "AVAILABLE_DOCS":["..."]}
-#   Text mode: FEATURE_DIR:... \n AVAILABLE_DOCS: \n ✓/✗ file.md
-#   Paths only: REPO_ROOT: ... \n BRANCH: ... \n FEATURE_DIR: ... etc.
+# ВЫВОД:
+#   Режим JSON: {"FEATURE_DIR":"...", "AVAILABLE_DOCS":["..."]}
+#   Текстовый режим: FEATURE_DIR:... \n AVAILABLE_DOCS: \n ✓/✗ file.md
+#   Только пути: REPO_ROOT: ... \n BRANCH: ... \n FEATURE_DIR: ... etc.
 
 set -e
 
-# Parse command line arguments
+# Разбор аргументов командной строки
 JSON_MODE=false
 REQUIRE_TASKS=false
 INCLUDE_TASKS=false
@@ -43,49 +43,49 @@ for arg in "$@"; do
             ;;
         --help|-h)
             cat << 'EOF'
-Usage: check-prerequisites.sh [OPTIONS]
+Использование: check-prerequisites.sh [ОПЦИИ]
 
-Consolidated prerequisite checking for Spec-Driven Development workflow.
+Единая проверка предварительных требований для рабочего процесса Spec-Driven Development.
 
-OPTIONS:
-  --json              Output in JSON format
-  --require-tasks     Require tasks.md to exist (for implementation phase)
-  --include-tasks     Include tasks.md in AVAILABLE_DOCS list
-  --paths-only        Only output path variables (no prerequisite validation)
-  --help, -h          Show this help message
+ОПЦИИ:
+  --json              Вывод в формате JSON
+  --require-tasks     Требовать наличие tasks.md (для этапа реализации)
+  --include-tasks     Включить tasks.md в список AVAILABLE_DOCS
+  --paths-only        Выводить только переменные путей (без валидации предварительных требований)
+  --help, -h          Показать это сообщение справки
 
-EXAMPLES:
-  # Check task prerequisites (plan.md required)
+ПРИМЕРЫ:
+  # Проверка требований для задач (требуется plan.md)
   ./check-prerequisites.sh --json
   
-  # Check implementation prerequisites (plan.md + tasks.md required)
+  # Проверка требований для реализации (требуются plan.md и tasks.md)
   ./check-prerequisites.sh --json --require-tasks --include-tasks
   
-  # Get feature paths only (no validation)
+  # Получить только пути к фичам (без валидации)
   ./check-prerequisites.sh --paths-only
   
 EOF
             exit 0
             ;;
         *)
-            echo "ERROR: Unknown option '$arg'. Use --help for usage information." >&2
+            echo "ОШИБКА: Неизвестная опция '$arg'. Используйте --help для получения информации об использовании." >&2
             exit 1
             ;;
     esac
 done
 
-# Source common functions
+# Подключение общих функций
 SCRIPT_DIR="$(CDPATH="" cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
-# Get feature paths and validate branch
+# Получение путей фичи и валидация ветки
 eval $(get_feature_paths)
 check_feature_branch "$CURRENT_BRANCH" "$HAS_GIT" || exit 1
 
-# If paths-only mode, output paths and exit (support JSON + paths-only combined)
+# Если режим только путей, вывести пути и выйти (поддержка комбинации JSON + только пути)
 if $PATHS_ONLY; then
     if $JSON_MODE; then
-        # Minimal JSON paths payload (no validation performed)
+        # Минимальный набор путей в JSON (валидация не выполняется)
         printf '{"REPO_ROOT":"%s","BRANCH":"%s","FEATURE_DIR":"%s","FEATURE_SPEC":"%s","IMPL_PLAN":"%s","TASKS":"%s"}\n' \
             "$REPO_ROOT" "$CURRENT_BRANCH" "$FEATURE_DIR" "$FEATURE_SPEC" "$IMPL_PLAN" "$TASKS"
     else
@@ -99,48 +99,48 @@ if $PATHS_ONLY; then
     exit 0
 fi
 
-# Validate required directories and files
+# Валидация обязательных директорий и файлов
 if [[ ! -d "$FEATURE_DIR" ]]; then
-    echo "ERROR: Feature directory not found: $FEATURE_DIR" >&2
-    echo "Run /speckit.specify first to create the feature structure." >&2
+    echo "ОШИБКА: Директория фичи не найдена: $FEATURE_DIR" >&2
+    echo "Сначала запустите /speckit.specify, чтобы создать структуру фичи." >&2
     exit 1
 fi
 
 if [[ ! -f "$IMPL_PLAN" ]]; then
-    echo "ERROR: plan.md not found in $FEATURE_DIR" >&2
-    echo "Run /speckit.plan first to create the implementation plan." >&2
+    echo "ОШИБКА: plan.md не найден в $FEATURE_DIR" >&2
+    echo "Сначала запустите /speckit.plan, чтобы создать план реализации." >&2
     exit 1
 fi
 
-# Check for tasks.md if required
+# Проверка tasks.md, если требуется
 if $REQUIRE_TASKS && [[ ! -f "$TASKS" ]]; then
-    echo "ERROR: tasks.md not found in $FEATURE_DIR" >&2
-    echo "Run /speckit.tasks first to create the task list." >&2
+    echo "ОШИБКА: tasks.md не найден в $FEATURE_DIR" >&2
+    echo "Сначала запустите /speckit.tasks, чтобы создать список задач." >&2
     exit 1
 fi
 
-# Build list of available documents
+# Создание списка доступных документов
 docs=()
 
-# Always check these optional docs
+# Всегда проверять эти необязательные документы
 [[ -f "$RESEARCH" ]] && docs+=("research.md")
 [[ -f "$DATA_MODEL" ]] && docs+=("data-model.md")
 
-# Check contracts directory (only if it exists and has files)
+# Проверка директории контрактов (только если она существует и содержит файлы)
 if [[ -d "$CONTRACTS_DIR" ]] && [[ -n "$(ls -A "$CONTRACTS_DIR" 2>/dev/null)" ]]; then
     docs+=("contracts/")
 fi
 
 [[ -f "$QUICKSTART" ]] && docs+=("quickstart.md")
 
-# Include tasks.md if requested and it exists
+# Включить tasks.md, если запрошено и файл существует
 if $INCLUDE_TASKS && [[ -f "$TASKS" ]]; then
     docs+=("tasks.md")
 fi
 
-# Output results
+# Вывод результатов
 if $JSON_MODE; then
-    # Build JSON array of documents
+    # Создание JSON-массива документов
     if [[ ${#docs[@]} -eq 0 ]]; then
         json_docs="[]"
     else
@@ -150,11 +150,11 @@ if $JSON_MODE; then
     
     printf '{"FEATURE_DIR":"%s","AVAILABLE_DOCS":%s}\n' "$FEATURE_DIR" "$json_docs"
 else
-    # Text output
+    # Текстовый вывод
     echo "FEATURE_DIR:$FEATURE_DIR"
     echo "AVAILABLE_DOCS:"
     
-    # Show status of each potential document
+    # Показать статус каждого возможного документа
     check_file "$RESEARCH" "research.md"
     check_file "$DATA_MODEL" "data-model.md"
     check_dir "$CONTRACTS_DIR" "contracts/"

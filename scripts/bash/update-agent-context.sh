@@ -1,42 +1,42 @@
 #!/usr/bin/env bash
 
-# Update agent context files with information from plan.md
+# Обновление контекстных файлов агентов информацией из plan.md
 #
-# This script maintains AI agent context files by parsing feature specifications 
-# and updating agent-specific configuration files with project information.
+# Этот скрипт поддерживает файлы контекста ИИ-агентов, анализируя спецификации функций
+# и обновляя конфигурационные файлы агентов информацией о проекте.
 #
-# MAIN FUNCTIONS:
-# 1. Environment Validation
-#    - Verifies git repository structure and branch information
-#    - Checks for required plan.md files and templates
-#    - Validates file permissions and accessibility
+# ОСНОВНЫЕ ФУНКЦИИ:
+# 1. Проверка окружения
+#    - Проверяет структуру git-репозитория и информацию о ветке
+#    - Проверяет наличие обязательных файлов plan.md и шаблонов
+#    - Проверяет права доступа и доступность файлов
 #
-# 2. Plan Data Extraction
-#    - Parses plan.md files to extract project metadata
-#    - Identifies language/version, frameworks, databases, and project types
-#    - Handles missing or incomplete specification data gracefully
+# 2. Извлечение данных плана
+#    - Анализирует файлы plan.md для извлечения метаданных проекта
+#    - Определяет язык/версию, фреймворки, базы данных и типы проектов
+#    - Корректно обрабатывает отсутствующие или неполные данные спецификации
 #
-# 3. Agent File Management
-#    - Creates new agent context files from templates when needed
-#    - Updates existing agent files with new project information
-#    - Preserves manual additions and custom configurations
-#    - Supports multiple AI agent formats and directory structures
+# 3. Управление файлами агентов
+#    - Создает новые файлы контекста агентов из шаблонов при необходимости
+#    - Обновляет существующие файлы агентов новой информацией о проекте
+#    - Сохраняет ручные дополнения и пользовательские конфигурации
+#    - Поддерживает множество форматов ИИ-агентов и структур каталогов
 #
-# 4. Content Generation
-#    - Generates language-specific build/test commands
-#    - Creates appropriate project directory structures
-#    - Updates technology stacks and recent changes sections
-#    - Maintains consistent formatting and timestamps
+# 4. Генерация контента
+#    - Генерирует команды сборки/тестирования для конкретного языка
+#    - Создает соответствующие структуры каталогов проекта
+#    - Обновляет разделы технологического стека и недавних изменений
+#    - Поддерживает единообразное форматирование и временные метки
 #
-# 5. Multi-Agent Support
-#    - Handles agent-specific file paths and naming conventions
-#    - Supports: Claude, Gemini, Copilot, Cursor, Qwen, opencode, Codex, Windsurf, Kilo Code, Auggie CLI, Roo Code, CodeBuddy CLI, Qoder CLI, Amp, SHAI, or Amazon Q Developer CLI
-#    - Can update single agents or all existing agent files
-#    - Creates default Claude file if no agent files exist
+# 5. Поддержка мульти-агентов
+#    - Обрабатывает специфичные для агентов пути к файлам и соглашения об именовании
+#    - Поддерживает: Claude, Gemini, Copilot, Cursor, Qwen, opencode, Codex, Windsurf, Kilo Code, Auggie CLI, Roo Code, CodeBuddy CLI, Qoder CLI, Amp, SHAI или Amazon Q Developer CLI
+#    - Может обновлять отдельные агенты или все существующие файлы агентов
+#    - Создает файл Claude по умолчанию, если файлы агентов не существуют
 #
-# Usage: ./update-agent-context.sh [agent_type]
-# Agent types: claude|gemini|copilot|cursor-agent|qwen|opencode|codex|windsurf|kilocode|auggie|shai|q|bob|qoder
-# Leave empty to update all existing agent files
+# Использование: ./update-agent-context.sh [тип_агента]
+# Типы агентов: claude|gemini|copilot|cursor-agent|qwen|opencode|codex|windsurf|kilocode|auggie|shai|q|bob|qoder
+# Оставьте пустым для обновления всех существующих файлов агентов
 
 set -e
 
@@ -123,29 +123,29 @@ trap cleanup EXIT INT TERM
 validate_environment() {
     # Check if we have a current branch/feature (git or non-git)
     if [[ -z "$CURRENT_BRANCH" ]]; then
-        log_error "Unable to determine current feature"
+        log_error "Не удалось определить текущую функцию"
         if [[ "$HAS_GIT" == "true" ]]; then
-            log_info "Make sure you're on a feature branch"
+            log_info "Убедитесь, что вы находитесь в ветке функции"
         else
-            log_info "Set SPECIFY_FEATURE environment variable or create a feature first"
+            log_info "Установите переменную окружения SPECIFY_FEATURE или сначала создайте функцию"
         fi
         exit 1
     fi
     
     # Check if plan.md exists
     if [[ ! -f "$NEW_PLAN" ]]; then
-        log_error "No plan.md found at $NEW_PLAN"
-        log_info "Make sure you're working on a feature with a corresponding spec directory"
+        log_error "Файл plan.md не найден по пути $NEW_PLAN"
+        log_info "Убедитесь, что вы работаете над функцией с соответствующим каталогом спецификаций"
         if [[ "$HAS_GIT" != "true" ]]; then
-            log_info "Use: export SPECIFY_FEATURE=your-feature-name or create a new feature first"
+            log_info "Используйте: export SPECIFY_FEATURE=your-feature-name или создайте новую функцию"
         fi
         exit 1
     fi
     
     # Check if template exists (needed for new files)
     if [[ ! -f "$TEMPLATE_FILE" ]]; then
-        log_warning "Template file not found at $TEMPLATE_FILE"
-        log_warning "Creating new agent files will fail"
+        log_warning "Файл шаблона не найден по пути $TEMPLATE_FILE"
+        log_warning "Создание новых файлов агентов не удастся"
     fi
 }
 
@@ -169,16 +169,16 @@ parse_plan_data() {
     local plan_file="$1"
     
     if [[ ! -f "$plan_file" ]]; then
-        log_error "Plan file not found: $plan_file"
+        log_error "Файл плана не найден: $plan_file"
         return 1
     fi
     
     if [[ ! -r "$plan_file" ]]; then
-        log_error "Plan file is not readable: $plan_file"
+        log_error "Файл плана недоступен для чтения: $plan_file"
         return 1
     fi
     
-    log_info "Parsing plan data from $plan_file"
+    log_info "Анализ данных плана из $plan_file"
     
     NEW_LANG=$(extract_plan_field "Language/Version" "$plan_file")
     NEW_FRAMEWORK=$(extract_plan_field "Primary Dependencies" "$plan_file")
@@ -187,21 +187,21 @@ parse_plan_data() {
     
     # Log what we found
     if [[ -n "$NEW_LANG" ]]; then
-        log_info "Found language: $NEW_LANG"
+        log_info "Найден язык: $NEW_LANG"
     else
-        log_warning "No language information found in plan"
+        log_warning "Информация о языке не найдена в плане"
     fi
     
     if [[ -n "$NEW_FRAMEWORK" ]]; then
-        log_info "Found framework: $NEW_FRAMEWORK"
+        log_info "Найден фреймворк: $NEW_FRAMEWORK"
     fi
     
     if [[ -n "$NEW_DB" ]] && [[ "$NEW_DB" != "N/A" ]]; then
-        log_info "Found database: $NEW_DB"
+        log_info "Найдена база данных: $NEW_DB"
     fi
     
     if [[ -n "$NEW_PROJECT_TYPE" ]]; then
-        log_info "Found project type: $NEW_PROJECT_TYPE"
+        log_info "Найден тип проекта: $NEW_PROJECT_TYPE"
     fi
 }
 
@@ -264,7 +264,7 @@ get_commands_for_language() {
 
 get_language_conventions() {
     local lang="$1"
-    echo "$lang: Follow standard conventions"
+    echo "$lang: Следуйте стандартным соглашениям"
 }
 
 create_new_agent_file() {
@@ -274,19 +274,19 @@ create_new_agent_file() {
     local current_date="$4"
     
     if [[ ! -f "$TEMPLATE_FILE" ]]; then
-        log_error "Template not found at $TEMPLATE_FILE"
+        log_error "Шаблон не найден по пути $TEMPLATE_FILE"
         return 1
     fi
     
     if [[ ! -r "$TEMPLATE_FILE" ]]; then
-        log_error "Template file is not readable: $TEMPLATE_FILE"
+        log_error "Файл шаблона недоступен для чтения: $TEMPLATE_FILE"
         return 1
     fi
     
-    log_info "Creating new agent context file from template..."
+    log_info "Создание нового файла контекста агента из шаблона..."
     
     if ! cp "$TEMPLATE_FILE" "$temp_file"; then
-        log_error "Failed to copy template file"
+        log_error "Не удалось скопировать файл шаблона"
         return 1
     fi
     
@@ -320,13 +320,13 @@ create_new_agent_file() {
 
     local recent_change
     if [[ -n "$escaped_lang" && -n "$escaped_framework" ]]; then
-        recent_change="- $escaped_branch: Added $escaped_lang + $escaped_framework"
+        recent_change="- $escaped_branch: Добавлено $escaped_lang + $escaped_framework"
     elif [[ -n "$escaped_lang" ]]; then
-        recent_change="- $escaped_branch: Added $escaped_lang"
+        recent_change="- $escaped_branch: Добавлено $escaped_lang"
     elif [[ -n "$escaped_framework" ]]; then
-        recent_change="- $escaped_branch: Added $escaped_framework"
+        recent_change="- $escaped_branch: Добавлено $escaped_framework"
     else
-        recent_change="- $escaped_branch: Added"
+        recent_change="- $escaped_branch: Добавлено"
     fi
 
     local substitutions=(
@@ -341,7 +341,7 @@ create_new_agent_file() {
     
     for substitution in "${substitutions[@]}"; do
         if ! sed -i.bak -e "$substitution" "$temp_file"; then
-            log_error "Failed to perform substitution: $substitution"
+            log_error "Не удалось выполнить подстановку: $substitution"
             rm -f "$temp_file" "$temp_file.bak"
             return 1
         fi
@@ -364,12 +364,12 @@ update_existing_agent_file() {
     local target_file="$1"
     local current_date="$2"
     
-    log_info "Updating existing agent context file..."
+    log_info "Обновление существующего файла контекста агента..."
     
     # Use a single temporary file for atomic update
     local temp_file
     temp_file=$(mktemp) || {
-        log_error "Failed to create temporary file"
+        log_error "Не удалось создать временный файл"
         return 1
     }
     
@@ -389,20 +389,20 @@ update_existing_agent_file() {
     
     # Prepare new change entry
     if [[ -n "$tech_stack" ]]; then
-        new_change_entry="- $CURRENT_BRANCH: Added $tech_stack"
+        new_change_entry="- $CURRENT_BRANCH: Добавлено $tech_stack"
     elif [[ -n "$NEW_DB" ]] && [[ "$NEW_DB" != "N/A" ]] && [[ "$NEW_DB" != "NEEDS CLARIFICATION" ]]; then
-        new_change_entry="- $CURRENT_BRANCH: Added $NEW_DB"
+        new_change_entry="- $CURRENT_BRANCH: Добавлено $NEW_DB"
     fi
     
     # Check if sections exist in the file
     local has_active_technologies=0
     local has_recent_changes=0
     
-    if grep -q "^## Active Technologies" "$target_file" 2>/dev/null; then
+    if grep -q "^## Активные технологии" "$target_file" 2>/dev/null; then
         has_active_technologies=1
     fi
     
-    if grep -q "^## Recent Changes" "$target_file" 2>/dev/null; then
+    if grep -q "^## Недавние изменения" "$target_file" 2>/dev/null; then
         has_recent_changes=1
     fi
     
@@ -416,7 +416,7 @@ update_existing_agent_file() {
     
     while IFS= read -r line || [[ -n "$line" ]]; do
         # Handle Active Technologies section
-        if [[ "$line" == "## Active Technologies" ]]; then
+        if [[ "$line" == "## Активные технологии" ]]; then
             echo "$line" >> "$temp_file"
             in_tech_section=true
             continue
@@ -440,7 +440,7 @@ update_existing_agent_file() {
         fi
         
         # Handle Recent Changes section
-        if [[ "$line" == "## Recent Changes" ]]; then
+        if [[ "$line" == "## Недавние изменения" ]]; then
             echo "$line" >> "$temp_file"
             # Add new change entry right after the heading
             if [[ -n "$new_change_entry" ]]; then
@@ -463,7 +463,7 @@ update_existing_agent_file() {
         fi
         
         # Update timestamp
-        if [[ "$line" =~ \*\*Last\ updated\*\*:.*[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] ]]; then
+        if [[ "$line" =~ Последнее\ обновление:.*[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] ]]; then
             echo "$line" | sed "s/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/$current_date/" >> "$temp_file"
         else
             echo "$line" >> "$temp_file"
@@ -479,21 +479,21 @@ update_existing_agent_file() {
     # If sections don't exist, add them at the end of the file
     if [[ $has_active_technologies -eq 0 ]] && [[ ${#new_tech_entries[@]} -gt 0 ]]; then
         echo "" >> "$temp_file"
-        echo "## Active Technologies" >> "$temp_file"
+        echo "## Активные технологии" >> "$temp_file"
         printf '%s\n' "${new_tech_entries[@]}" >> "$temp_file"
         tech_entries_added=true
     fi
     
     if [[ $has_recent_changes -eq 0 ]] && [[ -n "$new_change_entry" ]]; then
         echo "" >> "$temp_file"
-        echo "## Recent Changes" >> "$temp_file"
+        echo "## Недавние изменения" >> "$temp_file"
         echo "$new_change_entry" >> "$temp_file"
         changes_entries_added=true
     fi
     
     # Move temp file to target atomically
     if ! mv "$temp_file" "$target_file"; then
-        log_error "Failed to update target file"
+        log_error "Не удалось обновить целевой файл"
         rm -f "$temp_file"
         return 1
     fi
@@ -509,11 +509,11 @@ update_agent_file() {
     local agent_name="$2"
     
     if [[ -z "$target_file" ]] || [[ -z "$agent_name" ]]; then
-        log_error "update_agent_file requires target_file and agent_name parameters"
+        log_error "update_agent_file требует параметры target_file и agent_name"
         return 1
     fi
     
-    log_info "Updating $agent_name context file: $target_file"
+    log_info "Обновление файла контекста $agent_name: $target_file"
     
     local project_name
     project_name=$(basename "$REPO_ROOT")
@@ -525,7 +525,7 @@ update_agent_file() {
     target_dir=$(dirname "$target_file")
     if [[ ! -d "$target_dir" ]]; then
         if ! mkdir -p "$target_dir"; then
-            log_error "Failed to create directory: $target_dir"
+            log_error "Не удалось создать каталог: $target_dir"
             return 1
         fi
     fi
@@ -534,39 +534,39 @@ update_agent_file() {
         # Create new file from template
         local temp_file
         temp_file=$(mktemp) || {
-            log_error "Failed to create temporary file"
+            log_error "Не удалось создать временный файл"
             return 1
         }
         
         if create_new_agent_file "$target_file" "$temp_file" "$project_name" "$current_date"; then
             if mv "$temp_file" "$target_file"; then
-                log_success "Created new $agent_name context file"
+                log_success "Создан новый файл контекста $agent_name"
             else
-                log_error "Failed to move temporary file to $target_file"
+                log_error "Не удалось переместить временный файл в $target_file"
                 rm -f "$temp_file"
                 return 1
             fi
         else
-            log_error "Failed to create new agent file"
+            log_error "Не удалось создать новый файл агента"
             rm -f "$temp_file"
             return 1
         fi
     else
         # Update existing file
         if [[ ! -r "$target_file" ]]; then
-            log_error "Cannot read existing file: $target_file"
+            log_error "Невозможно прочитать существующий файл: $target_file"
             return 1
         fi
         
         if [[ ! -w "$target_file" ]]; then
-            log_error "Cannot write to existing file: $target_file"
+            log_error "Невозможно записать в существующий файл: $target_file"
             return 1
         fi
         
         if update_existing_agent_file "$target_file" "$current_date"; then
-            log_success "Updated existing $agent_name context file"
+            log_success "Обновлен существующий файл контекста $agent_name"
         else
-            log_error "Failed to update existing agent file"
+            log_error "Не удалось обновить существующий файл агента"
             return 1
         fi
     fi

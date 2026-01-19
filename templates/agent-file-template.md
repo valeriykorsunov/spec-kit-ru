@@ -1,26 +1,26 @@
-# [PROJECT NAME] Development Guidelines
+# Руководство по разработке [PROJECT NAME]
 
-Auto-generated from all feature plans. Last updated: [DATE]
+Автоматически сгенерировано из всех планов функций. Последнее обновление: [DATE]
 
-## Active Technologies
+## Активные технологии
 
 [EXTRACTED FROM ALL PLAN.MD FILES]
 
-## Project Structure
+## Структура проекта
 
 ```text
 [ACTUAL STRUCTURE FROM PLANS]
 ```
 
-## Commands
+## Команды
 
 [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES]
 
-## Code Style
+## Стиль кода
 
 [LANGUAGE-SPECIFIC, ONLY FOR LANGUAGES IN USE]
 
-## Recent Changes
+## Недавние изменения
 
 [LAST 3 FEATURES AND WHAT THEY ADDED]
 

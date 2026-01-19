@@ -1,275 +1,275 @@
 # AGENTS.md
 
-## About Spec Kit and Specify
+## О Spec Kit и Specify
 
-**GitHub Spec Kit** is a comprehensive toolkit for implementing Spec-Driven Development (SDD) - a methodology that emphasizes creating clear specifications before implementation. The toolkit includes templates, scripts, and workflows that guide development teams through a structured approach to building software.
+**GitHub Spec Kit** — это комплексный инструментарий для реализации Spec-Driven Development (SDD) — методологии, которая делает упор на создание четких спецификаций перед реализацией. Инструментарий включает шаблоны, скрипты и рабочие процессы, которые направляют команды разработчиков через структурированный подход к созданию программного обеспечения.
 
-**Specify CLI** is the command-line interface that bootstraps projects with the Spec Kit framework. It sets up the necessary directory structures, templates, and AI agent integrations to support the Spec-Driven Development workflow.
+**Specify CLI** — это интерфейс командной строки, который инициализирует проекты с использованием фреймворка Spec Kit. Он настраивает необходимые структуры каталогов, шаблоны и интеграции с ИИ-агентами для поддержки рабочего процесса Spec-Driven Development.
 
-The toolkit supports multiple AI coding assistants, allowing teams to use their preferred tools while maintaining consistent project structure and development practices.
+Инструментарий поддерживает множество ИИ-ассистентов по написанию кода, позволяя командам использовать предпочитаемые инструменты, сохраняя при этом единую структуру проекта и практики разработки.
 
 ---
 
-## General practices
+## Общие практики
 
-- Any changes to `__init__.py` for the Specify CLI require a version rev in `pyproject.toml` and addition of entries to `CHANGELOG.md`.
+- Любые изменения в `__init__.py` для Specify CLI требуют обновления версии в `pyproject.toml` и добавления записей в `CHANGELOG.md`.
 
-## Adding New Agent Support
+## Добавление поддержки нового агента
 
-This section explains how to add support for new AI agents/assistants to the Specify CLI. Use this guide as a reference when integrating new AI tools into the Spec-Driven Development workflow.
+В этом разделе объясняется, как добавить поддержку новых ИИ-агентов/ассистентов в Specify CLI. Используйте это руководство как справку при интеграции новых ИИ-инструментов в рабочий процесс Spec-Driven Development.
 
-### Overview
+### Обзор
 
-Specify supports multiple AI agents by generating agent-specific command files and directory structures when initializing projects. Each agent has its own conventions for:
+Specify поддерживает множество ИИ-агентов, генерируя специфичные для агента файлы команд и структуры каталогов при инициализации проектов. У каждого агента есть свои соглашения для:
 
-- **Command file formats** (Markdown, TOML, etc.)
-- **Directory structures** (`.claude/commands/`, `.windsurf/workflows/`, etc.)
-- **Command invocation patterns** (slash commands, CLI tools, etc.)
-- **Argument passing conventions** (`$ARGUMENTS`, `{{args}}`, etc.)
+- **Форматов файлов команд** (Markdown, TOML и т.д.)
+- **Структур каталогов** (`.claude/commands/`, `.windsurf/workflows/` и т.д.)
+- **Паттернов вызова команд** (слэш-команды, CLI инструменты и т.д.)
+- **Соглашений передачи аргументов** (`$ARGUMENTS`, `{{args}}` и т.д.)
 
-### Current Supported Agents
+### Текущие поддерживаемые агенты
 
-| Agent                      | Directory              | Format   | CLI Tool        | Description                 |
+| Агент                      | Каталог                | Формат   | CLI Инструмент  | Описание                    |
 | -------------------------- | ---------------------- | -------- | --------------- | --------------------------- |
-| **Claude Code**            | `.claude/commands/`    | Markdown | `claude`        | Anthropic's Claude Code CLI |
-| **Gemini CLI**             | `.gemini/commands/`    | TOML     | `gemini`        | Google's Gemini CLI         |
-| **GitHub Copilot**         | `.github/agents/`      | Markdown | N/A (IDE-based) | GitHub Copilot in VS Code   |
+| **Claude Code**            | `.claude/commands/`    | Markdown | `claude`        | Anthropic Claude Code CLI   |
+| **Gemini CLI**             | `.gemini/commands/`    | TOML     | `gemini`        | Google Gemini CLI           |
+| **GitHub Copilot**         | `.github/agents/`      | Markdown | N/A (в IDE)     | GitHub Copilot в VS Code    |
 | **Cursor**                 | `.cursor/commands/`    | Markdown | `cursor-agent`  | Cursor CLI                  |
-| **Qwen Code**              | `.qwen/commands/`      | TOML     | `qwen`          | Alibaba's Qwen Code CLI     |
+| **Qwen Code**              | `.qwen/commands/`      | TOML     | `qwen`          | Alibaba Qwen Code CLI       |
 | **opencode**               | `.opencode/command/`   | Markdown | `opencode`      | opencode CLI                |
 | **Codex CLI**              | `.codex/commands/`     | Markdown | `codex`         | Codex CLI                   |
-| **Windsurf**               | `.windsurf/workflows/` | Markdown | N/A (IDE-based) | Windsurf IDE workflows      |
-| **Kilo Code**              | `.kilocode/rules/`     | Markdown | N/A (IDE-based) | Kilo Code IDE               |
+| **Windsurf**               | `.windsurf/workflows/` | Markdown | N/A (в IDE)     | Windsurf IDE workflows      |
+| **Kilo Code**              | `.kilocode/rules/`     | Markdown | N/A (в IDE)     | Kilo Code IDE               |
 | **Auggie CLI**             | `.augment/rules/`      | Markdown | `auggie`        | Auggie CLI                  |
-| **Roo Code**               | `.roo/rules/`          | Markdown | N/A (IDE-based) | Roo Code IDE                |
+| **Roo Code**               | `.roo/rules/`          | Markdown | N/A (в IDE)     | Roo Code IDE                |
 | **CodeBuddy CLI**          | `.codebuddy/commands/` | Markdown | `codebuddy`     | CodeBuddy CLI               |
 | **Qoder CLI**              | `.qoder/commands/`     | Markdown | `qoder`         | Qoder CLI                   |
 | **Amazon Q Developer CLI** | `.amazonq/prompts/`    | Markdown | `q`             | Amazon Q Developer CLI      |
 | **Amp**                    | `.agents/commands/`    | Markdown | `amp`           | Amp CLI                     |
 | **SHAI**                   | `.shai/commands/`      | Markdown | `shai`          | SHAI CLI                    |
-| **IBM Bob**                | `.bob/commands/`       | Markdown | N/A (IDE-based) | IBM Bob IDE                 |
+| **IBM Bob**                | `.bob/commands/`       | Markdown | N/A (в IDE)     | IBM Bob IDE                 |
 
-### Step-by-Step Integration Guide
+### Пошаговое руководство по интеграции
 
-Follow these steps to add a new agent (using a hypothetical new agent as an example):
+Следуйте этим шагам, чтобы добавить нового агента (используя гипотетического нового агента в качестве примера):
 
-#### 1. Add to AGENT_CONFIG
+#### 1. Добавление в AGENT_CONFIG
 
-**IMPORTANT**: Use the actual CLI tool name as the key, not a shortened version.
+**ВАЖНО**: Используйте реальное имя CLI инструмента в качестве ключа, а не сокращенную версию.
 
-Add the new agent to the `AGENT_CONFIG` dictionary in `src/specify_cli/__init__.py`. This is the **single source of truth** for all agent metadata:
+Добавьте нового агента в словарь `AGENT_CONFIG` в `src/specify_cli/__init__.py`. Это **единый источник истины** для всех метаданных агентов:
 
 ```python
 AGENT_CONFIG = {
-    # ... existing agents ...
-    "new-agent-cli": {  # Use the ACTUAL CLI tool name (what users type in terminal)
+    # ... существующие агенты ...
+    "new-agent-cli": {  # Используйте РЕАЛЬНОЕ имя CLI инструмента (то, что пользователи вводят в терминале)
         "name": "New Agent Display Name",
-        "folder": ".newagent/",  # Directory for agent files
-        "install_url": "https://example.com/install",  # URL for installation docs (or None if IDE-based)
-        "requires_cli": True,  # True if CLI tool required, False for IDE-based agents
+        "folder": ".newagent/",  # Каталог для файлов агента
+        "install_url": "https://example.com/install",  # URL документации по установке (или None, если агент в IDE)
+        "requires_cli": True,  # True если требуется CLI инструмент, False для агентов в IDE
     },
 }
 ```
 
-**Key Design Principle**: The dictionary key should match the actual executable name that users install. For example:
+**Ключевой принцип проектирования**: Ключ словаря должен совпадать с реальным именем исполняемого файла, который устанавливают пользователи. Например:
 
-- ✅ Use `"cursor-agent"` because the CLI tool is literally called `cursor-agent`
-- ❌ Don't use `"cursor"` as a shortcut if the tool is `cursor-agent`
+- ✅ Используйте `"cursor-agent"`, потому что CLI инструмент буквально называется `cursor-agent`
+- ❌ Не используйте `"cursor"` как сокращение, если инструмент называется `cursor-agent`
 
-This eliminates the need for special-case mappings throughout the codebase.
+Это исключает необходимость в специальных сопоставлениях (маппинге) по всей кодовой базе.
 
-**Field Explanations**:
+**Пояснение полей**:
 
-- `name`: Human-readable display name shown to users
-- `folder`: Directory where agent-specific files are stored (relative to project root)
-- `install_url`: Installation documentation URL (set to `None` for IDE-based agents)
-- `requires_cli`: Whether the agent requires a CLI tool check during initialization
+- `name`: Человекочитаемое имя, отображаемое пользователям
+- `folder`: Каталог, где хранятся файлы агента (относительно корня проекта)
+- `install_url`: URL документации по установке (установите `None` для агентов в IDE)
+- `requires_cli`: Требует ли агент проверки наличия CLI инструмента при инициализации
 
-#### 2. Update CLI Help Text
+#### 2. Обновление справки CLI
 
-Update the `--ai` parameter help text in the `init()` command to include the new agent:
+Обновите текст справки параметра `--ai` в команде `init()`, чтобы включить нового агента:
 
 ```python
 ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: claude, gemini, copilot, cursor-agent, qwen, opencode, codex, windsurf, kilocode, auggie, codebuddy, new-agent-cli, or q"),
 ```
 
-Also update any function docstrings, examples, and error messages that list available agents.
+Также обновите все docstrings функций, примеры и сообщения об ошибках, где перечисляются доступные агенты.
 
-#### 3. Update README Documentation
+#### 3. Обновление документации README
 
-Update the **Supported AI Agents** section in `README.md` to include the new agent:
+Обновите раздел **Supported AI Agents** в `README.md`, чтобы включить нового агента:
 
-- Add the new agent to the table with appropriate support level (Full/Partial)
-- Include the agent's official website link
-- Add any relevant notes about the agent's implementation
-- Ensure the table formatting remains aligned and consistent
+- Добавьте нового агента в таблицу с соответствующим уровнем поддержки (Full/Partial)
+- Включите ссылку на официальный сайт агента
+- Добавьте любые релевантные примечания о реализации агента
+- Убедитесь, что форматирование таблицы остается выровненным и последовательным
 
-#### 4. Update Release Package Script
+#### 4. Обновление скрипта создания пакетов релиза
 
-Modify `.github/workflows/scripts/create-release-packages.sh`:
+Модифицируйте `.github/workflows/scripts/create-release-packages.sh`:
 
-##### Add to ALL_AGENTS array
+##### Добавьте в массив ALL_AGENTS
 
 ```bash
 ALL_AGENTS=(claude gemini copilot cursor-agent qwen opencode windsurf q)
 ```
 
-##### Add case statement for directory structure
+##### Добавьте case statement для структуры каталогов
 
 ```bash
 case $agent in
-  # ... existing cases ...
+  # ... существующие кейсы ...
   windsurf)
     mkdir -p "$base_dir/.windsurf/workflows"
     generate_commands windsurf md "\$ARGUMENTS" "$base_dir/.windsurf/workflows" "$script" ;;
 esac
 ```
 
-#### 4. Update GitHub Release Script
+#### 5. Обновление скрипта GitHub Release
 
-Modify `.github/workflows/scripts/create-github-release.sh` to include the new agent's packages:
+Модифицируйте `.github/workflows/scripts/create-github-release.sh`, чтобы включить пакеты нового агента:
 
 ```bash
 gh release create "$VERSION" \
-  # ... existing packages ...
+  # ... существующие пакеты ...
   .genreleases/spec-kit-template-windsurf-sh-"$VERSION".zip \
   .genreleases/spec-kit-template-windsurf-ps-"$VERSION".zip \
-  # Add new agent packages here
+  # Добавьте пакеты нового агента здесь
 ```
 
-#### 5. Update Agent Context Scripts
+#### 6. Обновление скриптов контекста агента
 
-##### Bash script (`scripts/bash/update-agent-context.sh`)
+##### Bash скрипт (`scripts/bash/update-agent-context.sh`)
 
-Add file variable:
+Добавьте переменную файла:
 
 ```bash
 WINDSURF_FILE="$REPO_ROOT/.windsurf/rules/specify-rules.md"
 ```
 
-Add to case statement:
+Добавьте в case statement:
 
 ```bash
 case "$AGENT_TYPE" in
-  # ... existing cases ...
+  # ... существующие кейсы ...
   windsurf) update_agent_file "$WINDSURF_FILE" "Windsurf" ;;
   "")
-    # ... existing checks ...
+    # ... существующие проверки ...
     [ -f "$WINDSURF_FILE" ] && update_agent_file "$WINDSURF_FILE" "Windsurf";
-    # Update default creation condition
+    # Обновление условия создания по умолчанию
     ;;
 esac
 ```
 
-##### PowerShell script (`scripts/powershell/update-agent-context.ps1`)
+##### PowerShell скрипт (`scripts/powershell/update-agent-context.ps1`)
 
-Add file variable:
+Добавьте переменную файла:
 
 ```powershell
 $windsurfFile = Join-Path $repoRoot '.windsurf/rules/specify-rules.md'
 ```
 
-Add to switch statement:
+Добавьте в switch statement:
 
 ```powershell
 switch ($AgentType) {
-    # ... existing cases ...
+    # ... существующие кейсы ...
     'windsurf' { Update-AgentFile $windsurfFile 'Windsurf' }
     '' {
         foreach ($pair in @(
-            # ... existing pairs ...
+            # ... существующие пары ...
             @{file=$windsurfFile; name='Windsurf'}
         )) {
             if (Test-Path $pair.file) { Update-AgentFile $pair.file $pair.name }
         }
-        # Update default creation condition
+        # Обновление условия создания по умолчанию
     }
 }
 ```
 
-#### 6. Update CLI Tool Checks (Optional)
+#### 7. Обновление проверок CLI инструментов (Опционально)
 
-For agents that require CLI tools, add checks in the `check()` command and agent validation:
+Для агентов, требующих CLI инструменты, добавьте проверки в команду `check()` и валидацию агента:
 
 ```python
-# In check() command
+# В команде check()
 tracker.add("windsurf", "Windsurf IDE (optional)")
 windsurf_ok = check_tool_for_tracker("windsurf", "https://windsurf.com/", tracker)
 
-# In init validation (only if CLI tool required)
+# В валидации init (только если требуется CLI инструмент)
 elif selected_ai == "windsurf":
     if not check_tool("windsurf", "Install from: https://windsurf.com/"):
         console.print("[red]Error:[/red] Windsurf CLI is required for Windsurf projects")
         agent_tool_missing = True
 ```
 
-**Note**: CLI tool checks are now handled automatically based on the `requires_cli` field in AGENT_CONFIG. No additional code changes needed in the `check()` or `init()` commands - they automatically loop through AGENT_CONFIG and check tools as needed.
+**Примечание**: Проверки CLI инструментов теперь обрабатываются автоматически на основе поля `requires_cli` в AGENT_CONFIG. Дополнительные изменения кода в командах `check()` или `init()` не требуются — они автоматически проходят по AGENT_CONFIG и проверяют инструменты по необходимости.
 
-## Important Design Decisions
+## Важные проектные решения
 
-### Using Actual CLI Tool Names as Keys
+### Использование реальных имен CLI инструментов как ключей
 
-**CRITICAL**: When adding a new agent to AGENT_CONFIG, always use the **actual executable name** as the dictionary key, not a shortened or convenient version.
+**КРИТИЧНО**: При добавлении нового агента в AGENT_CONFIG всегда используйте **реальное имя исполняемого файла** в качестве ключа словаря, а не сокращенную или удобную версию.
 
-**Why this matters:**
+**Почему это важно:**
 
-- The `check_tool()` function uses `shutil.which(tool)` to find executables in the system PATH
-- If the key doesn't match the actual CLI tool name, you'll need special-case mappings throughout the codebase
-- This creates unnecessary complexity and maintenance burden
+- Функция `check_tool()` использует `shutil.which(tool)` для поиска исполняемых файлов в системном PATH
+- Если ключ не совпадает с реальным именем CLI инструмента, вам понадобятся специальные сопоставления (маппинг) по всей кодовой базе
+- Это создает ненужную сложность и нагрузку на сопровождение
 
-**Example - The Cursor Lesson:**
+**Пример — Урок Cursor:**
 
-❌ **Wrong approach** (requires special-case mapping):
+❌ **Неправильный подход** (требует специального маппинга):
 
 ```python
 AGENT_CONFIG = {
-    "cursor": {  # Shorthand that doesn't match the actual tool
+    "cursor": {  # Сокращение, которое не совпадает с реальным инструментом
         "name": "Cursor",
         # ...
     }
 }
 
-# Then you need special cases everywhere:
+# Тогда вам нужны специальные кейсы везде:
 cli_tool = agent_key
 if agent_key == "cursor":
-    cli_tool = "cursor-agent"  # Map to the real tool name
+    cli_tool = "cursor-agent"  # Маппинг на реальное имя инструмента
 ```
 
-✅ **Correct approach** (no mapping needed):
+✅ **Правильный подход** (маппинг не нужен):
 
 ```python
 AGENT_CONFIG = {
-    "cursor-agent": {  # Matches the actual executable name
+    "cursor-agent": {  # Совпадает с реальным именем исполняемого файла
         "name": "Cursor",
         # ...
     }
 }
 
-# No special cases needed - just use agent_key directly!
+# Специальные кейсы не нужны - просто используйте agent_key напрямую!
 ```
 
-**Benefits of this approach:**
+**Преимущества этого подхода:**
 
-- Eliminates special-case logic scattered throughout the codebase
-- Makes the code more maintainable and easier to understand
-- Reduces the chance of bugs when adding new agents
-- Tool checking "just works" without additional mappings
+- Устраняет логику специальных кейсов, разбросанную по кодовой базе
+- Делает код более поддерживаемым и простым для понимания
+- Снижает вероятность багов при добавлении новых агентов
+- Проверка инструментов работает "из коробки" без дополнительных маппингов
 
-#### 7. Update Devcontainer files (Optional)
+#### 8. Обновление файлов Devcontainer (Опционально)
 
-For agents that have VS Code extensions or require CLI installation, update the devcontainer configuration files:
+Для агентов, имеющих расширения VS Code или требующих установки CLI, обновите конфигурационные файлы devcontainer:
 
-##### VS Code Extension-based Agents
+##### Агенты на основе расширений VS Code
 
-For agents available as VS Code extensions, add them to `.devcontainer/devcontainer.json`:
+Для агентов, доступных как расширения VS Code, добавьте их в `.devcontainer/devcontainer.json`:
 
 ```json
 {
   "customizations": {
     "vscode": {
       "extensions": [
-        // ... existing extensions ...
-        // [New Agent Name]
+        // ... существующие расширения ...
+        // [Имя нового агента]
         "[New Agent Extension ID]"
       ]
     }
@@ -277,34 +277,34 @@ For agents available as VS Code extensions, add them to `.devcontainer/devcontai
 }
 ```
 
-##### CLI-based Agents
+##### Агенты на основе CLI
 
-For agents that require CLI tools, add installation commands to `.devcontainer/post-create.sh`:
+Для агентов, требующих CLI инструменты, добавьте команды установки в `.devcontainer/post-create.sh`:
 
 ```bash
 #!/bin/bash
 
-# Existing installations...
+# Существующие установки...
 
 echo -e "\n🤖 Installing [New Agent Name] CLI..."
-# run_command "npm install -g [agent-cli-package]@latest" # Example for node-based CLI
-# or other installation instructions (must be non-interactive and compatible with Linux Debian "Trixie" or later)...
+# run_command "npm install -g [agent-cli-package]@latest" # Пример для node-based CLI
+# или другие инструкции по установке (должны быть неинтерактивными и совместимыми с Linux Debian "Trixie" или новее)...
 echo "✅ Done"
 
 ```
 
-**Quick Tips:**
+**Быстрые советы:**
 
-- **Extension-based agents**: Add to the `extensions` array in `devcontainer.json`
-- **CLI-based agents**: Add installation scripts to `post-create.sh`
-- **Hybrid agents**: May require both extension and CLI installation
-- **Test thoroughly**: Ensure installations work in the devcontainer environment
+- **Агенты на основе расширений**: Добавьте в массив `extensions` в `devcontainer.json`
+- **Агенты на основе CLI**: Добавьте скрипты установки в `post-create.sh`
+- **Гибридные агенты**: Могут требовать установки как расширения, так и CLI
+- **Тщательно тестируйте**: Убедитесь, что установки работают в среде devcontainer
 
-## Agent Categories
+## Категории агентов
 
-### CLI-Based Agents
+### CLI-агенты
 
-Require a command-line tool to be installed:
+Требуют установки инструмента командной строки:
 
 - **Claude Code**: `claude` CLI
 - **Gemini CLI**: `gemini` CLI
@@ -317,21 +317,21 @@ Require a command-line tool to be installed:
 - **Amp**: `amp` CLI
 - **SHAI**: `shai` CLI
 
-### IDE-Based Agents
+### IDE-агенты
 
-Work within integrated development environments:
+Работают внутри интегрированных сред разработки:
 
-- **GitHub Copilot**: Built into VS Code/compatible editors
-- **Windsurf**: Built into Windsurf IDE
-- **IBM Bob**: Built into IBM Bob IDE
+- **GitHub Copilot**: Встроен в VS Code/совместимые редакторы
+- **Windsurf**: Встроен в Windsurf IDE
+- **IBM Bob**: Встроен в IBM Bob IDE
 
-## Command File Formats
+## Форматы файлов команд
 
-### Markdown Format
+### Формат Markdown
 
-Used by: Claude, Cursor, opencode, Windsurf, Amazon Q Developer, Amp, SHAI, IBM Bob
+Используется: Claude, Cursor, opencode, Windsurf, Amazon Q Developer, Amp, SHAI, IBM Bob
 
-**Standard format:**
+**Стандартный формат:**
 
 ```markdown
 ---
@@ -341,7 +341,7 @@ description: "Command description"
 Command content with {SCRIPT} and $ARGUMENTS placeholders.
 ```
 
-**GitHub Copilot Chat Mode format:**
+**Формат режима чата GitHub Copilot:**
 
 ```markdown
 ---
@@ -352,9 +352,9 @@ mode: speckit.command-name
 Command content with {SCRIPT} and $ARGUMENTS placeholders.
 ```
 
-### TOML Format
+### Формат TOML
 
-Used by: Gemini, Qwen
+Используется: Gemini, Qwen
 
 ```toml
 description = "Command description"
@@ -364,50 +364,50 @@ Command content with {SCRIPT} and {{args}} placeholders.
 """
 ```
 
-## Directory Conventions
+## Соглашения о каталогах
 
-- **CLI agents**: Usually `.<agent-name>/commands/`
-- **IDE agents**: Follow IDE-specific patterns:
+- **CLI агенты**: Обычно `.<agent-name>/commands/`
+- **IDE агенты**: Следуют специфичным для IDE паттернам:
   - Copilot: `.github/agents/`
   - Cursor: `.cursor/commands/`
   - Windsurf: `.windsurf/workflows/`
 
-## Argument Patterns
+## Шаблоны аргументов
 
-Different agents use different argument placeholders:
+Разные агенты используют разные плейсхолдеры для аргументов:
 
 - **Markdown/prompt-based**: `$ARGUMENTS`
 - **TOML-based**: `{{args}}`
-- **Script placeholders**: `{SCRIPT}` (replaced with actual script path)
-- **Agent placeholders**: `__AGENT__` (replaced with agent name)
+- **Плейсхолдеры скриптов**: `{SCRIPT}` (заменяется реальным путем к скрипту)
+- **Плейсхолдеры агентов**: `__AGENT__` (заменяется именем агента)
 
-## Testing New Agent Integration
+## Тестирование интеграции нового агента
 
-1. **Build test**: Run package creation script locally
-2. **CLI test**: Test `specify init --ai <agent>` command
-3. **File generation**: Verify correct directory structure and files
-4. **Command validation**: Ensure generated commands work with the agent
-5. **Context update**: Test agent context update scripts
+1. **Build test**: Запустите скрипт создания пакета локально
+2. **CLI test**: Протестируйте команду `specify init --ai <agent>`
+3. **File generation**: Проверьте правильность структуры каталогов и файлов
+4. **Command validation**: Убедитесь, что сгенерированные команды работают с агентом
+5. **Context update**: Протестируйте скрипты обновления контекста агента
 
-## Common Pitfalls
+## Распространенные ошибки
 
-1. **Using shorthand keys instead of actual CLI tool names**: Always use the actual executable name as the AGENT_CONFIG key (e.g., `"cursor-agent"` not `"cursor"`). This prevents the need for special-case mappings throughout the codebase.
-2. **Forgetting update scripts**: Both bash and PowerShell scripts must be updated when adding new agents.
-3. **Incorrect `requires_cli` value**: Set to `True` only for agents that actually have CLI tools to check; set to `False` for IDE-based agents.
-4. **Wrong argument format**: Use correct placeholder format for each agent type (`$ARGUMENTS` for Markdown, `{{args}}` for TOML).
-5. **Directory naming**: Follow agent-specific conventions exactly (check existing agents for patterns).
-6. **Help text inconsistency**: Update all user-facing text consistently (help strings, docstrings, README, error messages).
+1. **Использование сокращенных ключей вместо реальных имен CLI инструментов**: Всегда используйте реальное имя исполняемого файла как ключ в AGENT_CONFIG (например, `"cursor-agent"`, а не `"cursor"`). Это предотвращает необходимость в специальных сопоставлениях по всей кодовой базе.
+2. **Забытые скрипты обновления**: Как bash, так и PowerShell скрипты должны быть обновлены при добавлении новых агентов.
+3. **Неверное значение `requires_cli`**: Устанавливайте в `True` только для агентов, у которых действительно есть CLI инструменты для проверки; устанавливайте в `False` для агентов в IDE.
+4. **Неверный формат аргументов**: Используйте правильный формат плейсхолдера для каждого типа агента (`$ARGUMENTS` для Markdown, `{{args}}` для TOML).
+5. **Именование каталогов**: Точно следуйте соглашениям агента (проверьте существующих агентов на наличие паттернов).
+6. **Несогласованность текста справки**: Обновляйте весь текст, видимый пользователю, согласованно (строки справки, docstrings, README, сообщения об ошибках).
 
-## Future Considerations
+## Перспективы развития
 
-When adding new agents:
+При добавлении новых агентов:
 
-- Consider the agent's native command/workflow patterns
-- Ensure compatibility with the Spec-Driven Development process
-- Document any special requirements or limitations
-- Update this guide with lessons learned
-- Verify the actual CLI tool name before adding to AGENT_CONFIG
+- Учитывайте нативные паттерны команд/рабочих процессов агента
+- Обеспечивайте совместимость с процессом Spec-Driven Development
+- Документируйте любые особые требования или ограничения
+- Обновляйте это руководство с учетом полученного опыта
+- Проверяйте реальное имя CLI инструмента перед добавлением в AGENT_CONFIG
 
 ---
 
-*This documentation should be updated whenever new agents are added to maintain accuracy and completeness.*
+*Эта документация должна обновляться каждый раз при добавлении новых агентов для поддержания точности и полноты.*

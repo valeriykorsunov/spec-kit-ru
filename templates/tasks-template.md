@@ -1,251 +1,250 @@
 ---
-
-description: "Task list template for feature implementation"
+description: "Шаблон списка задач для реализации функционала"
 ---
 
-# Tasks: [FEATURE NAME]
+# Задачи: [НАЗВАНИЕ ФУНКЦИОНАЛА]
 
-**Input**: Design documents from `/specs/[###-feature-name]/`
-**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
+**Входные данные**: Проектная документация из `/specs/[###-feature-name]/`
+**Предварительные требования**: plan.md (обязательно), spec.md (обязательно для пользовательских историй), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Тесты**: Примеры ниже включают задачи по тестированию. Тесты НЕОБЯЗАТЕЛЬНЫ - включайте их только если они явно запрошены в спецификации функционала.
 
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+**Организация**: Задачи сгруппированы по пользовательским историям (User Stories), чтобы обеспечить независимую реализацию и тестирование каждой истории.
 
-## Format: `[ID] [P?] [Story] Description`
+## Формат: `[ID] [P?] [Story] Описание`
 
-- **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
-- Include exact file paths in descriptions
+- **[P]**: Может выполняться параллельно (разные файлы, нет зависимостей)
+- **[Story]**: К какой пользовательской истории относится эта задача (например, US1, US2, US3)
+- Включайте точные пути к файлам в описания
 
-## Path Conventions
+## Соглашения о путях
 
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- **Одиночный проект**: `src/`, `tests/` в корне репозитория
+- **Веб-приложение**: `backend/src/`, `frontend/src/`
+- **Мобильное приложение**: `api/src/`, `ios/src/` или `android/src/`
+- Пути ниже предполагают одиночный проект - скорректируйте на основе структуры из plan.md
 
 <!-- 
   ============================================================================
-  IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
+  ВАЖНО: Задачи ниже являются ПРИМЕРАМИ для иллюстрации.
   
-  The /speckit.tasks command MUST replace these with actual tasks based on:
-  - User stories from spec.md (with their priorities P1, P2, P3...)
-  - Feature requirements from plan.md
-  - Entities from data-model.md
-  - Endpoints from contracts/
+  Команда /speckit.tasks ДОЛЖНА заменить их реальными задачами на основе:
+  - Пользовательских историй из spec.md (с их приоритетами P1, P2, P3...)
+  - Требований к функционалу из plan.md
+  - Сущностей из data-model.md
+  - Эндпоинтов из contracts/
   
-  Tasks MUST be organized by user story so each story can be:
-  - Implemented independently
-  - Tested independently
-  - Delivered as an MVP increment
+  Задачи ДОЛЖНЫ быть организованы по пользовательским историям, чтобы каждая история могла быть:
+  - Реализована независимо
+  - Протестирована независимо
+  - Поставлена как инкремент MVP
   
-  DO NOT keep these sample tasks in the generated tasks.md file.
+  НЕ ОСТАВЛЯЙТЕ эти примеры задач в сгенерированном файле tasks.md.
   ============================================================================
 -->
 
-## Phase 1: Setup (Shared Infrastructure)
+## Этап 1: Настройка (Общая инфраструктура)
 
-**Purpose**: Project initialization and basic structure
+**Цель**: Инициализация проекта и базовая структура
 
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
-
----
-
-## Phase 2: Foundational (Blocking Prerequisites)
-
-**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
-
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
-
-Examples of foundational tasks (adjust based on your project):
-
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
-
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+- [ ] T001 Создать структуру проекта согласно плану реализации
+- [ ] T002 Инициализировать проект на [язык] с зависимостями [фреймворк]
+- [ ] T003 [P] Настроить инструменты линтинга и форматирования
 
 ---
 
-## Phase 3: User Story 1 - [Title] (Priority: P1) 🎯 MVP
+## Этап 2: Фундамент (Блокирующие требования)
 
-**Goal**: [Brief description of what this story delivers]
+**Цель**: Базовая инфраструктура, которая ДОЛЖНА быть завершена до начала реализации ЛЮБОЙ пользовательской истории
 
-**Independent Test**: [How to verify this story works on its own]
+**⚠️ КРИТИЧНО**: Работа над пользовательскими историями не может начаться до завершения этого этапа
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+Примеры фундаментальных задач (скорректируйте под ваш проект):
 
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+- [ ] T004 Настроить схему базы данных и фреймворк миграций
+- [ ] T005 [P] Реализовать фреймворк аутентификации/авторизации
+- [ ] T006 [P] Настроить маршрутизацию API и структуру middleware
+- [ ] T007 Создать базовые модели/сущности, от которых зависят все истории
+- [ ] T008 Настроить инфраструктуру обработки ошибок и логирования
+- [ ] T009 Настроить управление конфигурацией окружения
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
-
-### Implementation for User Story 1
-
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
-
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
+**Контрольная точка**: Фундамент готов - реализация пользовательских историй теперь может идти параллельно
 
 ---
 
-## Phase 4: User Story 2 - [Title] (Priority: P2)
+## Этап 3: Пользовательская история 1 - [Заголовок] (Приоритет: P1) 🎯 MVP
 
-**Goal**: [Brief description of what this story delivers]
+**Цель**: [Краткое описание того, что дает эта история]
 
-**Independent Test**: [How to verify this story works on its own]
+**Независимый тест**: [Как проверить, что эта история работает сама по себе]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### Тесты для Пользовательской истории 1 (НЕОБЯЗАТЕЛЬНО - только если запрошены) ⚠️
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+> **ПРИМЕЧАНИЕ: Пишите эти тесты СНАЧАЛА, убедитесь, что они ПАДАЮТ перед реализацией**
 
-### Implementation for User Story 2
+- [ ] T010 [P] [US1] Контрактный тест для [endpoint] в tests/contract/test_[name].py
+- [ ] T011 [P] [US1] Интеграционный тест для [пользовательского пути] в tests/integration/test_[name].py
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+### Реализация для Пользовательской истории 1
 
-**Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
+- [ ] T012 [P] [US1] Создать модель [Entity1] в src/models/[entity1].py
+- [ ] T013 [P] [US1] Создать модель [Entity2] в src/models/[entity2].py
+- [ ] T014 [US1] Реализовать [Service] в src/services/[service].py (зависит от T012, T013)
+- [ ] T015 [US1] Реализовать [endpoint/feature] в src/[location]/[file].py
+- [ ] T016 [US1] Добавить валидацию и обработку ошибок
+- [ ] T017 [US1] Добавить логирование операций пользовательской истории 1
 
----
-
-## Phase 5: User Story 3 - [Title] (Priority: P3)
-
-**Goal**: [Brief description of what this story delivers]
-
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
-
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
-
-### Implementation for User Story 3
-
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
-
-**Checkpoint**: All user stories should now be independently functional
+**Контрольная точка**: На этом этапе Пользовательская история 1 должна быть полностью функциональна и тестируема независимо
 
 ---
 
-[Add more user story phases as needed, following the same pattern]
+## Этап 4: Пользовательская история 2 - [Заголовок] (Приоритет: P2)
+
+**Цель**: [Краткое описание того, что дает эта история]
+
+**Независимый тест**: [Как проверить, что эта история работает сама по себе]
+
+### Тесты для Пользовательской истории 2 (НЕОБЯЗАТЕЛЬНО - только если запрошены) ⚠️
+
+- [ ] T018 [P] [US2] Контрактный тест для [endpoint] в tests/contract/test_[name].py
+- [ ] T019 [P] [US2] Интеграционный тест для [пользовательского пути] в tests/integration/test_[name].py
+
+### Реализация для Пользовательской истории 2
+
+- [ ] T020 [P] [US2] Создать модель [Entity] в src/models/[entity].py
+- [ ] T021 [US2] Реализовать [Service] в src/services/[service].py
+- [ ] T022 [US2] Реализовать [endpoint/feature] в src/[location]/[file].py
+- [ ] T023 [US2] Интегрировать с компонентами Пользовательской истории 1 (если нужно)
+
+**Контрольная точка**: На этом этапе Пользовательские истории 1 И 2 должны работать независимо
 
 ---
 
-## Phase N: Polish & Cross-Cutting Concerns
+## Этап 5: Пользовательская история 3 - [Заголовок] (Приоритет: P3)
 
-**Purpose**: Improvements that affect multiple user stories
+**Цель**: [Краткое описание того, что дает эта история]
 
-- [ ] TXXX [P] Documentation updates in docs/
-- [ ] TXXX Code cleanup and refactoring
-- [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
-- [ ] TXXX Security hardening
-- [ ] TXXX Run quickstart.md validation
+**Независимый тест**: [Как проверить, что эта история работает сама по себе]
 
----
+### Тесты для Пользовательской истории 3 (НЕОБЯЗАТЕЛЬНО - только если запрошены) ⚠️
 
-## Dependencies & Execution Order
+- [ ] T024 [P] [US3] Контрактный тест для [endpoint] в tests/contract/test_[name].py
+- [ ] T025 [P] [US3] Интеграционный тест для [пользовательского пути] в tests/integration/test_[name].py
 
-### Phase Dependencies
+### Реализация для Пользовательской истории 3
 
-- **Setup (Phase 1)**: No dependencies - can start immediately
-- **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
-- **User Stories (Phase 3+)**: All depend on Foundational phase completion
-  - User stories can then proceed in parallel (if staffed)
-  - Or sequentially in priority order (P1 → P2 → P3)
-- **Polish (Final Phase)**: Depends on all desired user stories being complete
+- [ ] T026 [P] [US3] Создать модель [Entity] в src/models/[entity].py
+- [ ] T027 [US3] Реализовать [Service] в src/services/[service].py
+- [ ] T028 [US3] Реализовать [endpoint/feature] в src/[location]/[file].py
 
-### User Story Dependencies
-
-- **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
-- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - May integrate with US1 but should be independently testable
-- **User Story 3 (P3)**: Can start after Foundational (Phase 2) - May integrate with US1/US2 but should be independently testable
-
-### Within Each User Story
-
-- Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
-- Core implementation before integration
-- Story complete before moving to next priority
-
-### Parallel Opportunities
-
-- All Setup tasks marked [P] can run in parallel
-- All Foundational tasks marked [P] can run in parallel (within Phase 2)
-- Once Foundational phase completes, all user stories can start in parallel (if team capacity allows)
-- All tests for a user story marked [P] can run in parallel
-- Models within a story marked [P] can run in parallel
-- Different user stories can be worked on in parallel by different team members
+**Контрольная точка**: Все пользовательские истории теперь должны быть независимо функциональны
 
 ---
 
-## Parallel Example: User Story 1
+[Добавляйте больше этапов пользовательских историй по мере необходимости, следуя тому же шаблону]
+
+---
+
+## Этап N: Полировка и сквозные задачи
+
+**Цель**: Улучшения, затрагивающие несколько пользовательских историй
+
+- [ ] TXXX [P] Обновление документации в docs/
+- [ ] TXXX Очистка кода и рефакторинг
+- [ ] TXXX Оптимизация производительности всех историй
+- [ ] TXXX [P] Дополнительные модульные тесты (если запрошены) в tests/unit/
+- [ ] TXXX Усиление безопасности
+- [ ] TXXX Запуск валидации quickstart.md
+
+---
+
+## Зависимости и порядок выполнения
+
+### Зависимости этапов
+
+- **Настройка (Этап 1)**: Нет зависимостей - можно начинать немедленно
+- **Фундамент (Этап 2)**: Зависит от завершения Настройки - БЛОКИРУЕТ все пользовательские истории
+- **Пользовательские истории (Этап 3+)**: Все зависят от завершения Фундаментального этапа
+  - Пользовательские истории могут выполняться параллельно (если есть ресурсы)
+  - Или последовательно в порядке приоритета (P1 → P2 → P3)
+- **Полировка (Финальный этап)**: Зависит от завершения всех желаемых пользовательских историй
+
+### Зависимости пользовательских историй
+
+- **Пользовательская история 1 (P1)**: Можно начинать после Фундамента (Этап 2) - Нет зависимостей от других историй
+- **Пользовательская история 2 (P2)**: Можно начинать после Фундамента (Этап 2) - Может интегрироваться с US1, но должна быть тестируема независимо
+- **Пользовательская история 3 (P3)**: Можно начинать после Фундамента (Этап 2) - Может интегрироваться с US1/US2, но должна быть тестируема независимо
+
+### Внутри каждой пользовательской истории
+
+- Тесты (если включены) ДОЛЖНЫ быть написаны и ПАДАТЬ перед реализацией
+- Модели перед сервисами
+- Сервисы перед эндпоинтами
+- Базовая реализация перед интеграцией
+- История завершена перед переходом к следующему приоритету
+
+### Возможности параллелизма
+
+- Все задачи Настройки с пометкой [P] могут выполняться параллельно
+- Все Фундаментальные задачи с пометкой [P] могут выполняться параллельно (в рамках Этапа 2)
+- После завершения Фундаментального этапа все пользовательские истории могут начинаться параллельно (если позволяет емкость команды)
+- Все тесты для пользовательской истории с пометкой [P] могут выполняться параллельно
+- Модели внутри истории с пометкой [P] могут выполняться параллельно
+- Разные пользовательские истории могут выполняться параллельно разными членами команды
+
+---
+
+## Пример параллелизма: Пользовательская история 1
 
 ```bash
-# Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
+# Запуск всех тестов для Пользовательской истории 1 вместе (если тесты запрошены):
+Task: "Контрактный тест для [endpoint] в tests/contract/test_[name].py"
+Task: "Интеграционный тест для [user journey] в tests/integration/test_[name].py"
 
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
+# Запуск всех моделей для Пользовательской истории 1 вместе:
+Task: "Создать модель [Entity1] в src/models/[entity1].py"
+Task: "Создать модель [Entity2] в src/models/[entity2].py"
 ```
 
 ---
 
-## Implementation Strategy
+## Стратегия реализации
 
-### MVP First (User Story 1 Only)
+### Сначала MVP (Только Пользовательская история 1)
 
-1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
-3. Complete Phase 3: User Story 1
-4. **STOP and VALIDATE**: Test User Story 1 independently
-5. Deploy/demo if ready
+1. Завершить Этап 1: Настройка
+2. Завершить Этап 2: Фундамент (КРИТИЧНО - блокирует все истории)
+3. Завершить Этап 3: Пользовательская история 1
+4. **СТОП и ПРОВЕРКА**: Протестировать Пользовательскую историю 1 независимо
+5. Развернуть/показать демо, если готово
 
-### Incremental Delivery
+### Инкрементальная поставка
 
-1. Complete Setup + Foundational → Foundation ready
-2. Add User Story 1 → Test independently → Deploy/Demo (MVP!)
-3. Add User Story 2 → Test independently → Deploy/Demo
-4. Add User Story 3 → Test independently → Deploy/Demo
-5. Each story adds value without breaking previous stories
+1. Завершить Настройку + Фундамент → Фундамент готов
+2. Добавить Пользовательскую историю 1 → Протестировать независимо → Развернуть/Демо (MVP!)
+3. Добавить Пользовательскую историю 2 → Протестировать независимо → Развернуть/Демо
+4. Добавить Пользовательскую историю 3 → Протестировать независимо → Развернуть/Демо
+5. Каждая история добавляет ценность, не ломая предыдущие
 
-### Parallel Team Strategy
+### Стратегия параллельной команды
 
-With multiple developers:
+С несколькими разработчиками:
 
-1. Team completes Setup + Foundational together
-2. Once Foundational is done:
-   - Developer A: User Story 1
-   - Developer B: User Story 2
-   - Developer C: User Story 3
-3. Stories complete and integrate independently
+1. Команда завершает Настройку + Фундамент вместе
+2. Как только Фундамент готов:
+   - Разработчик A: Пользовательская история 1
+   - Разработчик B: Пользовательская история 2
+   - Разработчик C: Пользовательская история 3
+3. Истории завершаются и интегрируются независимо
 
 ---
 
-## Notes
+## Примечания
 
-- [P] tasks = different files, no dependencies
-- [Story] label maps task to specific user story for traceability
-- Each user story should be independently completable and testable
-- Verify tests fail before implementing
-- Commit after each task or logical group
-- Stop at any checkpoint to validate story independently
-- Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
+- [P] задачи = разные файлы, нет зависимостей
+- [Story] метка привязывает задачу к конкретной пользовательской истории для отслеживаемости
+- Каждая пользовательская история должна быть независимо выполнима и тестируема
+- Проверяйте, что тесты падают перед реализацией
+- Делайте коммит после каждой задачи или логической группы
+- Останавливайтесь на каждой контрольной точке для независимой проверки истории
+- Избегайте: размытых задач, конфликтов в одних и тех же файлах, зависимостей между историями, нарушающих независимость
