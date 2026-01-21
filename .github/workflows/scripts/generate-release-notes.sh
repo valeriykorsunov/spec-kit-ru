@@ -28,9 +28,9 @@ fi
 
 # Create release notes
 cat > release_notes.md << EOF
-This is the latest set of releases that you can use with your agent of choice. We recommend using the Specify CLI to scaffold your projects, however you can download these independently and manage them yourself.
+Это последний набор релизов, который вы можете использовать с выбранным вами агентом. Мы рекомендуем использовать Specify CLI для создания структуры ваших проектов, однако вы можете скачать эти архивы отдельно и управлять ими самостоятельно.
 
-## Changelog
+## Список изменений
 
 $COMMITS
 
