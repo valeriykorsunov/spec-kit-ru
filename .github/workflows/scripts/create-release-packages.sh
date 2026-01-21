@@ -52,6 +52,10 @@ generate_commands() {
     description=$(printf '%s\n' "$file_content" | awk '/^description:/ {sub(/^description:[[:space:]]*/, ""); print}')
     script_command=$(printf '%s\n' "$file_content" | awk -v sv="$script_variant" '/^[[:space:]]*'"$script_variant"':[[:space:]]*/ {sub(/^[[:space:]]*'"$script_variant"':[[:space:]]*/, ""); print}')
     
+    # Trim trailing newlines (if multiple lines matched) and take first non-empty
+    description=$(echo "$description" | head -n 1)
+    script_command=$(echo "$script_command" | head -n 1)
+    
     if [[ -z $script_command ]]; then
       echo "Warning: no script command found for $script_variant in $template" >&2
       script_command="(Missing script command for $script_variant)"
