@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 # Создание новой функциональности
-[CmdletBinding()]
+[CmdletBinding(PositionalBinding=$false)]
 param(
     [switch]$Json,
     [string]$ShortName,
@@ -10,6 +10,11 @@ param(
     [string[]]$FeatureDescription
 )
 $ErrorActionPreference = 'Stop'
+
+$utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+[Console]::InputEncoding = $utf8NoBom
+[Console]::OutputEncoding = $utf8NoBom
+$OutputEncoding = $utf8NoBom
 
 # Показать справку по запросу
 if ($Help) {
@@ -136,6 +141,8 @@ if (-not $fallbackRoot) {
     exit 1
 }
 
+Set-Location $fallbackRoot
+
 try {
     $repoRoot = git rev-parse --show-toplevel 2>$null
     if ($LASTEXITCODE -eq 0) {
@@ -256,6 +263,9 @@ $featureDir = Join-Path $specsDir $branchName
 New-Item -ItemType Directory -Path $featureDir -Force | Out-Null
 
 $template = Join-Path $repoRoot '.specify/templates/spec-template.md'
+if (-not (Test-Path -LiteralPath $template)) {
+    $template = Join-Path $repoRoot 'templates/spec-template.md'
+}
 $specFile = Join-Path $featureDir 'spec.md'
 if (Test-Path $template) { 
     Copy-Item $template $specFile -Force 

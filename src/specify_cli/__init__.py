@@ -32,6 +32,7 @@ import tempfile
 import shutil
 import shlex
 import json
+import codecs
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -896,7 +897,37 @@ def download_and_extract_template(project_path: Path, ai_assistant: str, script_
             elif verbose:
                 console.print(f"Очищено: {zip_path.name}")
 
+    if os.name == "nt" and script_type == "ps":
+        ensure_powershell_scripts_utf8_bom(project_path, tracker=tracker)
+
     return project_path
+
+
+def ensure_powershell_scripts_utf8_bom(project_path: Path, tracker: StepTracker | None = None) -> None:
+    scripts_root = project_path / ".specify" / "scripts" / "powershell"
+    if not scripts_root.is_dir():
+        return
+
+    if tracker:
+        tracker.add("ps-encoding", "Кодировка PowerShell")
+        tracker.start("ps-encoding")
+
+    converted = 0
+    for ps1_file in scripts_root.rglob("*.ps1"):
+        data = ps1_file.read_bytes()
+        if data.startswith(codecs.BOM_UTF8):
+            continue
+
+        try:
+            text = data.decode("utf-8")
+        except UnicodeDecodeError:
+            continue
+
+        ps1_file.write_bytes(codecs.BOM_UTF8 + text.encode("utf-8"))
+        converted += 1
+
+    if tracker:
+        tracker.complete("ps-encoding", f"обновлено: {converted}")
 
 
 def ensure_executable_scripts(project_path: Path, tracker: StepTracker | None = None) -> None:

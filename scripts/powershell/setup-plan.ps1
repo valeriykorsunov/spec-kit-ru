@@ -1,7 +1,7 @@
-#!/usr/bin/env pwsh
+﻿#!/usr/bin/env pwsh
 # Настройка плана реализации для функциональности
 
-[CmdletBinding()]
+[CmdletBinding(PositionalBinding=$false)]
 param(
     [switch]$Json,
     [switch]$Help
@@ -33,6 +33,9 @@ New-Item -ItemType Directory -Path $paths.FEATURE_DIR -Force | Out-Null
 
 # Скопировать шаблон плана, если он существует, иначе сообщить об этом или создать пустой файл
 $template = Join-Path $paths.REPO_ROOT '.specify/templates/plan-template.md'
+if (-not (Test-Path -LiteralPath $template)) {
+    $template = Join-Path $paths.REPO_ROOT 'templates/plan-template.md'
+}
 if (Test-Path $template) { 
     Copy-Item $template $paths.IMPL_PLAN -Force
     Write-Output "Шаблон плана скопирован в $($paths.IMPL_PLAN)"

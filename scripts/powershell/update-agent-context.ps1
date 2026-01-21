@@ -1,4 +1,4 @@
-#!/usr/bin/env pwsh
+﻿#!/usr/bin/env pwsh
 <#
 .SYNOPSIS
 Обновление контекстных файлов агента информацией из plan.md (версия PowerShell)
@@ -62,6 +62,9 @@ $Q_FILE        = Join-Path $REPO_ROOT 'AGENTS.md'
 $BOB_FILE      = Join-Path $REPO_ROOT 'AGENTS.md'
 
 $TEMPLATE_FILE = Join-Path $REPO_ROOT '.specify/templates/agent-file-template.md'
+if (-not (Test-Path -LiteralPath $TEMPLATE_FILE)) {
+    $TEMPLATE_FILE = Join-Path $REPO_ROOT 'templates/agent-file-template.md'
+}
 
 # Плейсхолдеры данных плана
 $script:NEW_LANG = ''
@@ -347,7 +350,7 @@ function Update-AgentFile {
         [string]$AgentName
     )
     if (-not $TargetFile -or -not $AgentName) { Write-Err 'Update-AgentFile требует TargetFile и AgentName'; return $false }
-    Write-Info "Обновление контекстного файла $AgentName: $TargetFile"
+    Write-Info "Обновление контекстного файла ${AgentName}: $TargetFile"
     $projectName = Split-Path $REPO_ROOT -Leaf
     $date = Get-Date
 

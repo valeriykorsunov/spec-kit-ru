@@ -201,6 +201,28 @@ agent: $basename
     }
 }
 
+function Ensure-Utf8BomForPowerShellScripts {
+    param(
+        [string]$RootDir
+    )
+
+    if (-not (Test-Path -LiteralPath $RootDir)) {
+        return
+    }
+
+    Get-ChildItem -LiteralPath $RootDir -Recurse -File -Filter "*.ps1" -ErrorAction SilentlyContinue | ForEach-Object {
+        $path = $_.FullName
+        $bytes = [System.IO.File]::ReadAllBytes($path)
+
+        if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+            return
+        }
+
+        $text = [System.Text.UTF8Encoding]::new($false).GetString($bytes)
+        [System.IO.File]::WriteAllText($path, $text, [System.Text.UTF8Encoding]::new($true))
+    }
+}
+
 function Build-Variant {
     param(
         [string]$Agent,
@@ -244,6 +266,10 @@ function Build-Variant {
         # Copy any script files that aren't in variant-specific directories
         Get-ChildItem -Path "scripts" -File -ErrorAction SilentlyContinue | ForEach-Object {
             Copy-Item -Path $_.FullName -Destination $scriptsDestDir -Force
+        }
+
+        if ($Script -eq 'ps') {
+            Ensure-Utf8BomForPowerShellScripts -RootDir (Join-Path $scriptsDestDir 'powershell')
         }
     }
     
@@ -360,14 +386,14 @@ $AllAgents = @('claude', 'gemini', 'copilot', 'cursor-agent', 'qwen', 'opencode'
 $AllScripts = @('sh', 'ps')
 
 function Normalize-List {
-    param([string]$Input)
+    param([string]$Text)
     
-    if ([string]::IsNullOrEmpty($Input)) {
+    if ([string]::IsNullOrEmpty($Text)) {
         return @()
     }
     
     # Split by comma or space and remove duplicates while preserving order
-    $items = $Input -split '[,\s]+' | Where-Object { $_ } | Select-Object -Unique
+    $items = $Text -split '[,\s]+' | Where-Object { $_ } | Select-Object -Unique
     return $items
 }
 
@@ -390,7 +416,7 @@ function Validate-Subset {
 
 # Determine agent list
 if (-not [string]::IsNullOrEmpty($Agents)) {
-    $AgentList = Normalize-List -Input $Agents
+    $AgentList = Normalize-List -Text $Agents
     if (-not (Validate-Subset -Type 'agent' -Allowed $AllAgents -Items $AgentList)) {
         exit 1
     }
@@ -400,7 +426,7 @@ if (-not [string]::IsNullOrEmpty($Agents)) {
 
 # Determine script list
 if (-not [string]::IsNullOrEmpty($Scripts)) {
-    $ScriptList = Normalize-List -Input $Scripts
+    $ScriptList = Normalize-List -Text $Scripts
     if (-not (Validate-Subset -Type 'script' -Allowed $AllScripts -Items $ScriptList)) {
         exit 1
     }

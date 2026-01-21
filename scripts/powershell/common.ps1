@@ -1,18 +1,35 @@
-#!/usr/bin/env pwsh
+﻿#!/usr/bin/env pwsh
 # Общие функции PowerShell, аналогичные common.sh
 
 function Get-RepoRoot {
     try {
         $result = git rev-parse --show-toplevel 2>$null
-        if ($LASTEXITCODE -eq 0) {
-            return $result
+        if ($LASTEXITCODE -eq 0 -and $result) {
+            $path = ($result | Select-Object -First 1).Trim()
+            if ($path) {
+                return [System.IO.Path]::GetFullPath($path)
+            }
         }
     } catch {
-        # Ошибка команды Git
     }
-    
-    # Возврат к расположению скрипта для репозиториев без git
-    return (Resolve-Path (Join-Path $PSScriptRoot "../../..")).Path
+
+    $startDir = $PSScriptRoot
+    $markers = @('.git', '.specify', 'pyproject.toml', 'package.json', 'AGENTS.md')
+    $current = $startDir
+    while ($true) {
+        foreach ($marker in $markers) {
+            if (Test-Path -LiteralPath (Join-Path $current $marker)) {
+                return ([System.IO.Path]::GetFullPath($current)).TrimEnd([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar)
+            }
+        }
+        $parent = Split-Path -Parent $current
+        if (-not $parent -or $parent -eq $current) {
+            break
+        }
+        $current = $parent
+    }
+
+    return ([System.IO.Path]::GetFullPath((Join-Path $startDir '..')))
 }
 
 function Get-CurrentBranch {
@@ -24,11 +41,10 @@ function Get-CurrentBranch {
     # Затем проверить git, если доступен
     try {
         $result = git rev-parse --abbrev-ref HEAD 2>$null
-        if ($LASTEXITCODE -eq 0) {
-            return $result
+        if ($LASTEXITCODE -eq 0 -and $result) {
+            return ($result | Select-Object -First 1).Trim()
         }
     } catch {
-        # Ошибка команды Git
     }
     
     # Для репозиториев без git попытаться найти последнюю директорию функциональности

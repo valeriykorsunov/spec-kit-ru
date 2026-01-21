@@ -1,4 +1,4 @@
-#!/usr/bin/env pwsh
+﻿#!/usr/bin/env pwsh
 
 # Скрипт проверки предварительных условий (PowerShell)
 #
@@ -14,7 +14,7 @@
 #   -PathsOnly          Вывести только переменные путей (без валидации)
 #   -Help, -h           Показать справку
 
-[CmdletBinding()]
+[CmdletBinding(PositionalBinding=$false)]
 param(
     [switch]$Json,
     [switch]$RequireTasks,
